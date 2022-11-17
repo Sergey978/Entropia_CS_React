@@ -1,4 +1,4 @@
-namespace SignupVerTutor.Helpers
+namespace Entropia_CS_React.Helpers
 {
     public class AppSettings
     {

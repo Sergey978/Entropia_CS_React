@@ -3,9 +3,9 @@ using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
-using SignupVerTutor.Helpers;
+using Entropia_CS_React.Helpers;
 
-namespace SignupVerTutor.Services
+namespace Entropia_CS_React.Services
 {
     public interface IEmailService
     {

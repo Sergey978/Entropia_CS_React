@@ -1,4 +1,4 @@
-namespace SignupVerTutor.Models.Accounts
+namespace Entropia_CS_React.Models.Accounts
 {
     public class RevokeTokenRequest
     {

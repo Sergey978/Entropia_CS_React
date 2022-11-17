@@ -9,11 +9,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using SignupVerTutor.Entities;
-using SignupVerTutor.Helpers;
-using SignupVerTutor.Models.Accounts;
+using Entropia_CS_React.Entities;
+using Entropia_CS_React.Helpers;
+using Entropia_CS_React.Models.Accounts;
 
-namespace SignupVerTutor.Services
+namespace Entropia_CS_React.Services
 {
     public interface IAccountService
     {

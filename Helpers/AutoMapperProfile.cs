@@ -1,8 +1,8 @@
 using AutoMapper;
-using SignupVerTutor.Entities;
-using SignupVerTutor.Models.Accounts;
+using Entropia_CS_React.Entities;
+using Entropia_CS_React.Models.Accounts;
 
-namespace SignupVerTutor.Helpers
+namespace Entropia_CS_React.Helpers
 {
     public class AutoMapperProfile : Profile
     {

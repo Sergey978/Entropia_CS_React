@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SignupVerTutor.Entities;
+using Entropia_CS_React.Entities;
 
-namespace SignupVerTutor.Helpers
+namespace Entropia_CS_React.Helpers
 {
     public class DataContext : DbContext
     {

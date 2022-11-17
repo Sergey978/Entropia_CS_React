@@ -1,6 +1,6 @@
 using System;
 
-namespace SignupVerTutor
+namespace Entropia_CS_React
 {
     public class WeatherForecast
     {

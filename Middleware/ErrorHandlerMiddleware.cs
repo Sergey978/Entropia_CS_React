@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SignupVerTutor.Helpers;
+using Entropia_CS_React.Helpers;
 
-namespace SignupVerTutor.Middleware
+namespace Entropia_CS_React.Middleware
 {
     public class ErrorHandlerMiddleware
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SignupVerTutor.Entities
+namespace Entropia_CS_React.Entities
 {
     public class Account
     {

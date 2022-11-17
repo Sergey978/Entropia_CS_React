@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace SignupVerTutor.Helpers
+namespace Entropia_CS_React.Helpers
 {
     // custom exception class for throwing application specific exceptions 
     // that can be caught and handled within the application

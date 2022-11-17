@@ -6,9 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SignupVerTutor.Helpers;
+using Entropia_CS_React.Helpers;
 
-namespace SignupVerTutor.Middleware
+namespace Entropia_CS_React.Middleware
 {
     public class JwtMiddleware
     {

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SignupVerTutor.Helpers;
-using SignupVerTutor.Middleware;
-using SignupVerTutor.Services;
+using Entropia_CS_React.Helpers;
+using Entropia_CS_React.Middleware;
+using Entropia_CS_React.Services;
 
-namespace SignupVerTutor
+namespace Entropia_CS_React
 {
     public class Startup
     {

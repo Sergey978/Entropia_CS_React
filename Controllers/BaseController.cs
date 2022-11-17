@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SignupVerTutor.Entities;
+using Entropia_CS_React.Entities;
 
-namespace SignupVerTutor.Controllers
+namespace Entropia_CS_React.Controllers
 {
     [Controller]
     public abstract class BaseController : ControllerBase

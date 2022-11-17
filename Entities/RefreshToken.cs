@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SignupVerTutor.Entities
+namespace Entropia_CS_React.Entities
 {
     [Owned]
     public class RefreshToken

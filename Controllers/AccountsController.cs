@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using SignupVerTutor.Entities;
-using SignupVerTutor.Models.Accounts;
-using SignupVerTutor.Services;
+using Entropia_CS_React.Entities;
+using Entropia_CS_React.Models.Accounts;
+using Entropia_CS_React.Services;
 
-namespace SignupVerTutor.Controllers
+namespace Entropia_CS_React.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SignupVerTutor.Helpers;
+using Entropia_CS_React.Helpers;
 
-namespace SignupVerTutor.Migrations
+namespace Entropia_CS_React.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20221114075525_InitialCreate")]

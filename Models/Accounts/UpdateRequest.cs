@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using SignupVerTutor.Entities;
+using Entropia_CS_React.Entities;
 
-namespace SignupVerTutor.Models.Accounts
+namespace Entropia_CS_React.Models.Accounts
 {
     public class UpdateRequest
     {

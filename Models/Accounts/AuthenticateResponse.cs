@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace SignupVerTutor.Models.Accounts
+namespace Entropia_CS_React.Models.Accounts
 {
     public class AuthenticateResponse
     {

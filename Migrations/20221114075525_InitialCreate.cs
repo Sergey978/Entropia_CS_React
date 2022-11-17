@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SignupVerTutor.Migrations
+namespace Entropia_CS_React.Migrations
 {
     public partial class InitialCreate : Migration
     {

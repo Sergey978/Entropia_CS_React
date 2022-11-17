@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace SignupVerTutor
+namespace Entropia_CS_React
 {
     public class Program
     {

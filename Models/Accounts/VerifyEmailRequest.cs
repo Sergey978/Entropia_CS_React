@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SignupVerTutor.Models.Accounts
+namespace Entropia_CS_React.Models.Accounts
 {
     public class VerifyEmailRequest
     {
