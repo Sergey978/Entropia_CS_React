@@ -9,9 +9,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Entropia_CS_React.Entities;
+using Entropia_CS_React.Domain.Models;
 using Entropia_CS_React.Helpers;
-using Entropia_CS_React.Models.Accounts;
+using Entropia_CS_React.Domain.Services.Communications.Account;
 
 namespace Entropia_CS_React.Services
 {

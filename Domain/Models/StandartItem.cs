@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Entropia_CS_React.Entities
+namespace Entropia_CS_React.Domain.Models
 {
     public class StandartItem
     {

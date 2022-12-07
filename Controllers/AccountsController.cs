@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
+using Entropia_CS_React.Domain.Models;
+using Entropia_CS_React.Domain.Services.Communications.Account;
+using Entropia_CS_React.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using Entropia_CS_React.Entities;
-using Entropia_CS_React.Models.Accounts;
-using Entropia_CS_React.Services;
 
 namespace Entropia_CS_React.Controllers
 {
@@ -14,27 +14,29 @@ namespace Entropia_CS_React.Controllers
     public class AccountsController : BaseController
     {
         private readonly IAccountService _accountService;
+
         private readonly IMapper _mapper;
+
         private string errMessage = "";
 
         public AccountsController(
             IAccountService accountService,
-            IMapper mapper)
+            IMapper mapper
+        )
         {
             _accountService = accountService;
             _mapper = mapper;
         }
 
         [HttpPost("authenticate")]
-        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        public ActionResult<AuthenticateResponse>
+        Authenticate(AuthenticateRequest model)
         {
-
             try
             {
                 var response = _accountService.Authenticate(model, ipAddress());
                 setTokenCookie(response.RefreshToken);
                 return Ok(response);
-
             }
             catch (Exception exc)
             {
@@ -42,17 +44,16 @@ namespace Entropia_CS_React.Controllers
             }
 
             return Unauthorized(new { message = errMessage });
-
         }
 
         [HttpPost("refresh-token")]
         public ActionResult<AuthenticateResponse> RefreshToken()
         {
-
             try
             {
                 var refreshToken = Request.Cookies["refreshToken"];
-                var response = _accountService.RefreshToken(refreshToken, ipAddress());
+                var response =
+                    _accountService.RefreshToken(refreshToken, ipAddress());
                 setTokenCookie(response.RefreshToken);
                 return Ok(response);
             }
@@ -62,8 +63,6 @@ namespace Entropia_CS_React.Controllers
             }
 
             return BadRequest(new { message = errMessage });
-
-
         }
 
         [Authorize]
@@ -88,32 +87,37 @@ namespace Entropia_CS_React.Controllers
         public IActionResult Register(RegisterRequest model)
         {
             _accountService.Register(model, Request.Headers["origin"]);
-            return Ok(new { message = "Registration successful, please check your email for verification instructions" });
+            return Ok(new {
+                message =
+                    "Registration successful, please check your email for verification instructions"
+            });
         }
 
         [HttpPost("verify-email")]
         public IActionResult VerifyEmail(VerifyEmailRequest model)
         {
-
             try
             {
                 _accountService.VerifyEmail(model.Token);
-                return Ok(new { message = "Verification successful, you can now login" });
+                return Ok(new {
+                    message = "Verification successful, you can now login"
+                });
             }
             catch (Exception e)
             {
                 errMessage = e.Message;
-
             }
             return BadRequest(new { message = errMessage });
-
         }
 
         [HttpPost("forgot-password")]
         public IActionResult ForgotPassword(ForgotPasswordRequest model)
         {
             _accountService.ForgotPassword(model, Request.Headers["origin"]);
-            return Ok(new { message = "Please check your email for password reset instructions" });
+            return Ok(new {
+                message =
+                    "Please check your email for password reset instructions"
+            });
         }
 
         [HttpPost("validate-reset-token")]
@@ -121,7 +125,7 @@ namespace Entropia_CS_React.Controllers
         {
             try
             {
-                _accountService.ValidateResetToken(model);
+                _accountService.ValidateResetToken (model);
                 return Ok(new { message = "Token is valid" });
             }
             catch (Exception ex)
@@ -137,17 +141,17 @@ namespace Entropia_CS_React.Controllers
         {
             try
             {
-                _accountService.ResetPassword(model);
-                return Ok(new { message = "Password reset successful, you can now login" });
+                _accountService.ResetPassword (model);
+                return Ok(new {
+                    message = "Password reset successful, you can now login"
+                });
             }
             catch (Exception ex)
             {
-
                 errMessage = ex.Message;
             }
 
             return BadRequest(new { message = errMessage });
-
         }
 
         [Authorize(Role.Admin)]
@@ -184,7 +188,6 @@ namespace Entropia_CS_React.Controllers
                 errMessage = ex.Message;
             }
             return BadRequest(new { message = errMessage });
-
         }
 
         [Authorize]
@@ -196,8 +199,7 @@ namespace Entropia_CS_React.Controllers
                 return Unauthorized(new { message = "Unauthorized" });
 
             // only admins can update role
-            if (Account.Role != Role.Admin)
-                model.Role = null;
+            if (Account.Role != Role.Admin) model.Role = null;
 
             try
             {
@@ -206,12 +208,10 @@ namespace Entropia_CS_React.Controllers
             }
             catch (Exception ex)
             {
-
                 errMessage = ex.Message;
             }
 
             return BadRequest(new { message = errMessage });
-
         }
 
         [Authorize]
@@ -222,19 +222,18 @@ namespace Entropia_CS_React.Controllers
             if (id != Account.Id && Account.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            _accountService.Delete(id);
+            _accountService.Delete (id);
             return Ok(new { message = "Account deleted successfully" });
         }
 
         // helper methods
-
         private void setTokenCookie(string token)
         {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
+            var cookieOptions =
+                new CookieOptions {
+                    HttpOnly = true,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
         }
 
@@ -243,7 +242,11 @@ namespace Entropia_CS_React.Controllers
             if (Request.Headers.ContainsKey("X-Forwarded-For"))
                 return Request.Headers["X-Forwarded-For"];
             else
-                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                return HttpContext
+                    .Connection
+                    .RemoteIpAddress
+                    .MapToIPv4()
+                    .ToString();
         }
     }
 }

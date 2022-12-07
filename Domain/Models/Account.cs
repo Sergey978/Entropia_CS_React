@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Entropia_CS_React.Entities
+namespace Entropia_CS_React.Domain.Models
 {
     public class Account
     {
-        public int Id { get; set; }       
-      
+        public int Id { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public bool AcceptTerms { get; set; }
@@ -21,7 +20,10 @@ namespace Entropia_CS_React.Entities
         public DateTime? Updated { get; set; }
         public List<RefreshToken> RefreshTokens { get; set; }
 
-        public bool OwnsToken(string token) 
+        public List<CustomItem> CustomItems { get; set; }
+        public List<UserStandartItem> StandartItems { get; set; }
+
+        public bool OwnsToken(string token)
         {
             return this.RefreshTokens?.Find(x => x.Token == token) != null;
         }

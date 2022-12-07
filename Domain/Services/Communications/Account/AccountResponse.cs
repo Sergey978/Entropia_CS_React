@@ -1,6 +1,6 @@
 using System;
 
-namespace Entropia_CS_React.Models.Accounts
+namespace Entropia_CS_React.Domain.Services.Communications.Account
 {
     public class AccountResponse
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entropia_CS_React.Entities;
+using Entropia_CS_React.Domain.Models;
 
 namespace Entropia_CS_React.Controllers
 {

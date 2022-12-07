@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entropia_CS_React.Models.Accounts
+namespace Entropia_CS_React.Domain.Services.Communications.Account
 {
-    public class ValidateResetTokenRequest
+    public class VerifyEmailRequest
     {
         [Required]
         public string Token { get; set; }

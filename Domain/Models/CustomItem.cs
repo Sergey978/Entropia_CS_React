@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Entropia_CS_React.Entities
+namespace Entropia_CS_React.Domain.Models
 {
     /*
-    EATE TABLE [dbo].[CustomItems](
+    CREATE TABLE [dbo].[CustomItems](
       +  [Id] [int] IDENTITY(1,1) NOT NULL,
       +  [Name] [nvarchar](50) NOT NULL,
       +  [Price] [decimal](5, 2) NOT NULL,
