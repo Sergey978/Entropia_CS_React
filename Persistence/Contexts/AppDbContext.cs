@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Entropia_CS_React.Domain.Models;
 
-namespace Entropia_CS_React.Helpers
+namespace Entropia_CS_React.Persistence.Contexts
 {
-    public class DataContext : DbContext
+    public class AppDbContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
 
@@ -15,7 +19,7 @@ namespace Entropia_CS_React.Helpers
 
         private readonly IConfiguration Configuration;
 
-        public DataContext(IConfiguration configuration)
+        public AppDbContext(IConfiguration configuration)
         {
             Configuration = configuration;
         }

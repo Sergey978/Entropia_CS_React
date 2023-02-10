@@ -1,14 +1,14 @@
 import React from "react";
 import { Page, ItemList, AddItemForm } from "../blocks";
-import {DataService} from "../_services";
+import {apiService} from "../_services";
 
 export const CustomItemsPage = () => {
 
 
     //for test later change hardcoded 
-    const userId = 4;
+   
 
-    const { getUserCustomtItems, deleteCustomItem, hideCustomItem } = DataService.getInstance();
+    
     const [customItems, setCustomItems] = React.useState([]);
     const [itemsLoading, setItemsLoading] = React.useState(true);
     const [successfullySubmitted, setSuccessfullySubmitted] = React.useState(
@@ -23,8 +23,9 @@ export const CustomItemsPage = () => {
     React.useEffect(() => {
         let cancelled = false;
         const doGetCustomItems = async () => {
-            const customItems = await getUserCustomtItems(userId);
+            const customItems = await apiService.getCustomtItems();
             if (!cancelled) {
+                console.log(customItems);
                 setCustomItems(customItems);
                 setItemsLoading(false);
             }
@@ -33,7 +34,7 @@ export const CustomItemsPage = () => {
         return () => {
             cancelled = true;
         };
-    }, [userId, successfullySubmitted, successfullyDeleted, itemsLoading]);
+    }, [successfullySubmitted, successfullyDeleted, itemsLoading]);
 
     // todo send _submitResult function to form
     const submitResult = (result) => {
@@ -46,7 +47,7 @@ export const CustomItemsPage = () => {
     }
 
     const onDeleteCustomItem = async (id) => {
-        const result = await deleteCustomItem(userId, id);
+        const result = await deleteCustomItem( id);
         if (result) {
             setSuccessfullyDeleted(result ? true : false);
         }
@@ -54,7 +55,7 @@ export const CustomItemsPage = () => {
     }
 
     const onHideItem = async (id) => {
-        const result = await hideCustomItem(userId, id);
+        const result = await hideCustomItem( id);
         if (result) {
             setItemsLoading(true);
 
@@ -106,7 +107,7 @@ export const CustomItemsPage = () => {
                                         )}
 
 
-                                        <AddItemForm _userId={userId} _submitResult={submitResult} _submited={successfullySubmitted} />
+                                        <AddItemForm _submitResult={submitResult} _submited={successfullySubmitted} />
                                     </div>
 
                                 </div>

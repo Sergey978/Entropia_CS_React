@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entropia_CS_React.Helpers;
+using Entropia_CS_React.Persistence.Contexts;
 
 namespace Entropia_CS_React.Middleware
 {
@@ -21,9 +22,12 @@ namespace Entropia_CS_React.Middleware
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, DataContext dataContext)
+        public async Task Invoke(HttpContext context, AppDbContext dataContext)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var token = context.Request.Headers["Authorization"]
+                .FirstOrDefault()
+                ?.Split(" ")
+                .Last();
 
             if (token != null)
                 await attachAccountToContext(context, dataContext, token);
@@ -31,21 +35,29 @@ namespace Entropia_CS_React.Middleware
             await _next(context);
         }
 
-        private async Task attachAccountToContext(HttpContext context, DataContext dataContext, string token)
+        private async Task attachAccountToContext(
+            HttpContext context,
+            AppDbContext dataContext,
+            string token
+        )
         {
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
+                tokenHandler.ValidateToken(
+                    token,
+                    new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                        ClockSkew = TimeSpan.Zero
+                    },
+                    out SecurityToken validatedToken
+                );
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var accountId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
@@ -53,7 +65,7 @@ namespace Entropia_CS_React.Middleware
                 // attach account to context on successful jwt validation
                 context.Items["Account"] = await dataContext.Accounts.FindAsync(accountId);
             }
-            catch 
+            catch
             {
                 // do nothing if jwt validation fails
                 // account is not attached to context so request won't have access to secure routes

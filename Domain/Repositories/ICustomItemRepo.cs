@@ -9,16 +9,12 @@ namespace Entropia_CS_React.Domain.Repositories
 {
     public interface ICustomItemRepo
     {
-        Task<IEnumerable<CustomItem>> ListAsync();
-
+        Task<IEnumerable<CustomItem>> ListAsync(int userId);
         Task AddAsync(CustomItem item);
-
         Task<CustomItem> FindByIdAsync(int id);
 
-        Task<CustomItem> UpdateAsync(CustomItem item);
+        void UpdateAsync(CustomItem item);
 
-        void Update(CustomItem product);
-
-        void Remove(CustomItem product);
+        void Remove(CustomItem item);
     }
 }

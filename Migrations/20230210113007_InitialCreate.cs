@@ -57,8 +57,7 @@ namespace SignupVerTutor.Migrations
                     Markup = table.Column<decimal>(type: "TEXT", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     Step = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    AccountId = table.Column<int>(type: "INTEGER", nullable: true)
+                    AccountId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +67,7 @@ namespace SignupVerTutor.Migrations
                         column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

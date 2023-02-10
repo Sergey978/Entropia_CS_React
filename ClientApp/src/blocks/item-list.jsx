@@ -18,10 +18,10 @@ const ItemList = ({ data, onDelete, onHide, _deleted }) => (
 
       {
         data.map((item) => (
-          <tr key={item.itemId}>
-            <td key={item.itemId + "_1"} className={!item.selected ? "selected" : ""}>{item.itemName}</td>
-            <td key={item.itemId + "_2"} >{item.cost}</td>
-            <td key={item.itemId + "_3"} className="items-button">
+          <tr key={item.id}>
+            <td key={item.id + "_1"} className={!item.selected ? "selected" : ""}>{item.name}</td>
+            <td key={item.id + "_2"} >{item.price}</td>
+            <td key={item.id + "_3"} className="items-button">
               {onDelete && <button className="btn btn-sm  btn-outline-danger float-right"
                 disabled={_deleted}
                 onClick={() => { onDelete(item.itemId) }}>

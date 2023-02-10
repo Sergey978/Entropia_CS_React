@@ -1,63 +1,87 @@
-export default class ApiService {
+import { fetchWrapper } from "../_helpers";
+import config from "../config.json";
 
-  // if api base url same as server host set is empty
-  //_apiBase = '';
-  //_apiBase = 'http://192.168.1.131:8080';
-  //_apiBase = "http://"+window.location.hostname;
-  _apiBase = "http://localhost:8080";
+const baseUrl = `${config.apiUrl}`;
 
-  async getResource(url, params) {
-    const res = await fetch(`${this._apiBase}${url}`,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        method: "POST",
-        //  body: "param1=value1&param2=value2"
-        body: params
+export const apiService = {
+  getCustomtItems,
+  // getStandartItems,
+  // deleteCustomItem,
+  // hideCustomItem,
+  // hideStandartItem,
+  addCustomItem,
+  // changeItem,
+};
+
+//  ------------EXAMPLE-------------
+// function login(email, password) {
+//   return fetchWrapper
+//     .post(`${baseUrl}/authenticate`, { email, password })
+//     .then((user) => {
+//       // publish user to subscribers and start timer to refresh token
+//       userSubject.next(user);
+//       startRefreshTokenTimer();
+//       return user;
+//     });
+// }
+
+// -------------- EXAMPLE ---------------
+// function getById(id) {
+//   return fetchWrapper.get(`${baseUrl}/${id}`);
+// }
+
+async function getCustomtItems() {
+  return fetchWrapper.get(`${baseUrl}/customitem`);
+}
+
+async function addCustomItem(params) {
+  return fetchWrapper.post(`${baseUrl}/customitem`, params);
+}
+
+// async function addCustomItem(params) {
+//   const res = await fetch(`${this.baseUrl}` + "/customitem", {
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     method: "POST",
+//     //  body: "param1=value1&param2=value2"
+//     body: params,
+//   });
+
+//   if (!res.ok) {
+//     throw new Error(`Could not fetch ${url}` + `, received ${res.status}`);
+//   }
+//   return await res.json();
+// }
+
+// posting form data to api
+async function postForm(apiUrl, data) {
+  fetch(`${this.baseUrl}${apiUrl}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      // HTTP 301 response
+      if (response.redirected) {
+        window.location.replace(response.url);
       }
-    );
+    })
+    .catch((error) => console.error(error));
+}
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
-    }
-    return await res.json();
-  }
+async function isUserNameExist(name) {
+  let res = this.getResource("/account/isUserNameExist/", `username=${name}`);
+  return res;
+}
 
+async function isUserEmailExist(email) {
+  let res = this.getResource("/account/isUserEmailExist/", `email=${email}`);
+  return res;
+}
 
-  // posting form data to api
-  postForm(apiUrl, data) {     
-    
-    fetch(`${this._apiBase}${apiUrl}`,
-      {
-        
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        // HTTP 301 response
-        if (response.redirected) {
-          window.location.replace(response.url);
-        }
-
-      })
-      .catch(error => console.error(error));
-  }
-
-
-  async isUserNameExist(name) {
-    let res = this.getResource("/account/isUserNameExist/", `username=${name}`);
-    return res;
-  }
-
-  async isUserEmailExist(email) {
-
-    let res = this.getResource("/account/isUserEmailExist/", `email=${email}`);
-    return res;
-  }
-
+async function addUserCustomItem(params) {
+  return fetchWrapper.post(baseUrl, params);
 }

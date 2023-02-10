@@ -1,19 +1,18 @@
 import React from "react";
 import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
-import {DataService} from '../_services';
+import {apiService} from '../_services';
 //import { IItem } from '../../services/data-service';
 
 
 
-export const AddItemForm = ({ _userId, _submitResult, _submited }) => {
-    const { addUserCustomItem } = DataService.getInstance();
+export const AddItemForm = ({  _submitResult, _submited }) => {
+    
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        const result = await addUserCustomItem({
-            userId: _userId,
-            itemName: data.itemName,
-            itemCost: data.cost,
+        const result = await apiService.addCustomItem({            
+            Name: data.Name,
+            Price: data.price,
         });
         _submitResult(Boolean(result));    
     };
@@ -26,17 +25,17 @@ export const AddItemForm = ({ _userId, _submitResult, _submited }) => {
                     <div className="col-6">
 
                         {/* register your input into the hook by invoking the "register" function */}
-                        <input className="form-control" placeholder="Item Name" {...register("itemName", { required: true })} />
-                        {errors.itemName && <span className="text-danger">This field is required</span> || !errors.cost && <label className="form-label" >Item name</label>}
+                        <input className="form-control" placeholder="Item Name" {...register("Name", { required: true })} />
+                        {errors.Name && <span className="text-danger">This field is required</span> || !errors.cost && <label className="form-label" >Item name</label>}
 
                     </div>
 
                     <div className="col-3">
 
                         {/* include validation with required or other standard HTML validation rules */}
-                        <input className="form-control" placeholder="0.0" {...register("cost", { required: true, min: 0.01 })} />
+                        <input className="form-control" placeholder="0.0" {...register("price", { required: true, min: 0.01 })} />
                         {/* errors will return when field validation fails  */}
-                        {errors.cost && <span className="text-danger">Required</span> || !errors.cost && <label className="form-label" >Cost</label>}
+                        {errors.price && <span className="text-danger">Required</span> || !errors.price && <label className="form-label" >Price</label>}
 
                     </div>
                     <div className="col-3 justify-content-end">

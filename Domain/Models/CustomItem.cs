@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace Entropia_CS_React.Domain.Models
 {
     /*
@@ -15,7 +14,7 @@ namespace Entropia_CS_React.Domain.Models
       +  [Markup] [decimal](6, 2) NULL,
       +  [PurchasePrice] [decimal](8, 2) NULL,
       +  [Step] [int] NULL,
-    PRIMARY KEY CLUSTERED 
+    PRIMARY KEY CLUSTERED
     (
         [Id] ASC
 
@@ -32,7 +31,6 @@ namespace Entropia_CS_React.Domain.Models
         public decimal Markup { get; set; }
         public decimal PurchasePrice { get; set; }
         public int Step { get; set; }
-
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
     }
 }

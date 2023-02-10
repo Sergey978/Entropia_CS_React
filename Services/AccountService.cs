@@ -12,6 +12,7 @@ using System.Text;
 using Entropia_CS_React.Domain.Models;
 using Entropia_CS_React.Helpers;
 using Entropia_CS_React.Domain.Services.Communications.Account;
+using Entropia_CS_React.Persistence.Contexts;
 
 namespace Entropia_CS_React.Services
 {
@@ -34,16 +35,17 @@ namespace Entropia_CS_React.Services
 
     public class AccountService : IAccountService
     {
-        private readonly DataContext _context;
+        private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly IEmailService _emailService;
 
         public AccountService(
-            DataContext context,
+            AppDbContext context,
             IMapper mapper,
             IOptions<AppSettings> appSettings,
-            IEmailService emailService)
+            IEmailService emailService
+        )
         {
             _context = context;
             _mapper = mapper;
@@ -54,11 +56,13 @@ namespace Entropia_CS_React.Services
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
             var account = _context.Accounts.SingleOrDefault(x => x.Email == model.Email);
-            
-            if (account == null || !account.IsVerified || !BC.Verify(model.Password, account.PasswordHash))
+
+            if (
+                account == null
+                || !account.IsVerified
+                || !BC.Verify(model.Password, account.PasswordHash)
+            )
                 throw new AppException("Email or password is incorrect");
-
-
 
             // authentication successful so generate jwt and refresh tokens
             var jwtToken = generateJwtToken(account);
@@ -149,7 +153,8 @@ namespace Entropia_CS_React.Services
         {
             var account = _context.Accounts.SingleOrDefault(x => x.VerificationToken == token);
 
-            if (account == null) throw new AppException("Verification failed");
+            if (account == null)
+                throw new AppException("Verification failed");
 
             account.Verified = DateTime.UtcNow;
             account.VerificationToken = null;
@@ -163,7 +168,8 @@ namespace Entropia_CS_React.Services
             var account = _context.Accounts.SingleOrDefault(x => x.Email == model.Email);
 
             // always return ok response to prevent email enumeration
-            if (account == null) return;
+            if (account == null)
+                return;
 
             // create reset token that expires after 1 day
             account.ResetToken = randomTokenString();
@@ -178,9 +184,9 @@ namespace Entropia_CS_React.Services
 
         public void ValidateResetToken(ValidateResetTokenRequest model)
         {
-            var account = _context.Accounts.SingleOrDefault(x =>
-                x.ResetToken == model.Token &&
-                x.ResetTokenExpires > DateTime.UtcNow);
+            var account = _context.Accounts.SingleOrDefault(
+                x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow
+            );
 
             if (account == null)
                 throw new AppException("Invalid token");
@@ -188,9 +194,9 @@ namespace Entropia_CS_React.Services
 
         public void ResetPassword(ResetPasswordRequest model)
         {
-            var account = _context.Accounts.SingleOrDefault(x =>
-                x.ResetToken == model.Token &&
-                x.ResetTokenExpires > DateTime.UtcNow);
+            var account = _context.Accounts.SingleOrDefault(
+                x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow
+            );
 
             if (account == null)
                 throw new AppException("Invalid token");
@@ -271,16 +277,21 @@ namespace Entropia_CS_React.Services
         private Account getAccount(int id)
         {
             var account = _context.Accounts.Find(id);
-            if (account == null) throw new KeyNotFoundException("Account not found");
+            if (account == null)
+                throw new KeyNotFoundException("Account not found");
             return account;
         }
 
         private (RefreshToken, Account) getRefreshToken(string token)
         {
-            var account = _context.Accounts.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
-            if (account == null) throw new AppException("Invalid token");
+            var account = _context.Accounts.SingleOrDefault(
+                u => u.RefreshTokens.Any(t => t.Token == token)
+            );
+            if (account == null)
+                throw new AppException("Invalid token");
             var refreshToken = account.RefreshTokens.Single(x => x.Token == token);
-            if (!refreshToken.IsActive) throw new AppException("Invalid token");
+            if (!refreshToken.IsActive)
+                throw new AppException("Invalid token");
             return (refreshToken, account);
         }
 
@@ -292,7 +303,10 @@ namespace Entropia_CS_React.Services
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", account.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature
+                )
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
@@ -311,9 +325,11 @@ namespace Entropia_CS_React.Services
 
         private void removeOldRefreshTokens(Account account)
         {
-            account.RefreshTokens.RemoveAll(x =>
-                !x.IsActive &&
-                x.Created.AddDays(_appSettings.RefreshTokenTTL) <= DateTime.UtcNow);
+            account.RefreshTokens.RemoveAll(
+                x =>
+                    !x.IsActive
+                    && x.Created.AddDays(_appSettings.RefreshTokenTTL) <= DateTime.UtcNow
+            );
         }
 
         private string randomTokenString()
@@ -331,12 +347,14 @@ namespace Entropia_CS_React.Services
             if (!string.IsNullOrEmpty(origin))
             {
                 var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
-                message = $@"<p>Please click the below link to verify your email address:</p>
+                message =
+                    $@"<p>Please click the below link to verify your email address:</p>
                              <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
             }
             else
             {
-                message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
+                message =
+                    $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
                              <p><code>{account.VerificationToken}</code></p>";
             }
 
@@ -353,9 +371,11 @@ namespace Entropia_CS_React.Services
         {
             string message;
             if (!string.IsNullOrEmpty(origin))
-                message = $@"<p>If you don't know your password please visit the <a href=""{origin}/account/forgot-password"">forgot password</a> page.</p>";
+                message =
+                    $@"<p>If you don't know your password please visit the <a href=""{origin}/account/forgot-password"">forgot password</a> page.</p>";
             else
-                message = "<p>If you don't know your password you can reset it via the <code>/accounts/forgot-password</code> api route.</p>";
+                message =
+                    "<p>If you don't know your password you can reset it via the <code>/accounts/forgot-password</code> api route.</p>";
 
             _emailService.Send(
                 to: email,
@@ -372,12 +392,14 @@ namespace Entropia_CS_React.Services
             if (!string.IsNullOrEmpty(origin))
             {
                 var resetUrl = $"{origin}/account/reset-password?token={account.ResetToken}";
-                message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
+                message =
+                    $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }
             else
             {
-                message = $@"<p>Please use the below token to reset your password with the <code>/accounts/reset-password</code> api route:</p>
+                message =
+                    $@"<p>Please use the below token to reset your password with the <code>/accounts/reset-password</code> api route:</p>
                              <p><code>{account.ResetToken}</code></p>";
             }
 

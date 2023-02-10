@@ -10,6 +10,10 @@ using Microsoft.Extensions.Hosting;
 using Entropia_CS_React.Helpers;
 using Entropia_CS_React.Middleware;
 using Entropia_CS_React.Services;
+using Entropia_CS_React.Persistence.Contexts;
+using Entropia_CS_React.Domain.Repositories;
+using Entropia_CS_React.Persistence.Repositories;
+using Entropia_CS_React.Domain.Services;
 
 namespace Entropia_CS_React
 {
@@ -28,36 +32,35 @@ namespace Entropia_CS_React
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services
-                .AddSpaStaticFiles(configuration =>
-                {
-                    configuration.RootPath = "ClientApp/build";
-                });
-            services.AddDbContext<DataContext>();
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
+            services.AddDbContext<AppDbContext>();
 
             services.AddCors();
             services
                 .AddControllers()
-                .AddJsonOptions(x =>
-                    x.JsonSerializerOptions.IgnoreNullValues = true);
+                .AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
 
             // configure strongly typed settings objects
-            services
-                .Configure<AppSettings>(Configuration
-                    .GetSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // configure DI for application services
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICustomItemRepo, CustomItemRepo>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICustomItemService, CustomItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env,
-            DataContext dataContext
+            AppDbContext dataContext
         )
         {
             if (env.IsDevelopment())
@@ -86,16 +89,15 @@ namespace Entropia_CS_React
 
             app.UseEndpoints(x => x.MapControllers());
 
-            app
-                .UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "ClientApp";
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer(npmScript: "start");
-                    }
-                });
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
         }
     }
 }
