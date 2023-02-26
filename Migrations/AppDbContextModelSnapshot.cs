@@ -141,9 +141,6 @@ namespace SignupVerTutor.Migrations
                     b.Property<int>("Step")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");

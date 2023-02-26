@@ -49,13 +49,3 @@ export const AddItemForm = ({  _submitResult, _submited }) => {
  
 
 
-// const submitForm = async (data: FormData) => {
-//     const result = await addUserCustomItem({
-//         userId: userId, 
-//         newItemName: string, 
-//         itemCost: number
-
-//     });
-//     setSuccessfullySubmitted(result ? true : false);
-//   };
-

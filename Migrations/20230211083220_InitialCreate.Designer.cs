@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SignupVerTutor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230210113007_InitialCreate")]
+    [Migration("20230211083220_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,9 +141,6 @@ namespace SignupVerTutor.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Step")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

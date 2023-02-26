@@ -102,7 +102,6 @@ namespace SignupVerTutor.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     StandartItemId = table.Column<int>(type: "INTEGER", nullable: false),
                     Selected = table.Column<bool>(type: "INTEGER", nullable: false),
                     BeginQuantity = table.Column<int>(type: "INTEGER", nullable: false),

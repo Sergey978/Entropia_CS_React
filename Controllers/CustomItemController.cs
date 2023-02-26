@@ -59,13 +59,13 @@ namespace Entropia_CS_React.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(
             int id,
-            [FromBody] SaveCustomItemResource resource
+            [FromBody] UpdateCustomItemResource resource
         )
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var item = _mapper.Map<SaveCustomItemResource, CustomItem>(resource);
+            var item = _mapper.Map<UpdateCustomItemResource, CustomItem>(resource);
             var result = await _itemService.UpdateAsync(id, item);
 
             if (!result.Success)

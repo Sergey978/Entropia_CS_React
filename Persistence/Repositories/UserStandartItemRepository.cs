@@ -21,7 +21,7 @@ namespace Entropia_CS_React.Persistence.Repositories
             // return await _context.UserStandartItems.
 
 
-            return await _context.UserStandartItems.Include(i => i.UserId).ToListAsync();
+            return await _context.UserStandartItems.ToListAsync();
         }
 
         public Task AddAsync(UserStandartItem item)

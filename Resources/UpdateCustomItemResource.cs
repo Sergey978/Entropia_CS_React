@@ -2,13 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace Entropia_CS_React.Domain.Models
+namespace Entropia_CS_React.Resources
 {
-    public class UserStandartItem
+    public class UpdateCustomItemResource
     {
         public int Id { get; set; }
-        public int StandartItemId { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string Name { get; set; }
+        public decimal Price { get; set; }
         public bool Selected { get; set; }
         public int BeginQuantity { get; set; }
         public decimal Markup { get; set; }

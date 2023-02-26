@@ -13,6 +13,7 @@ namespace Entropia_CS_React.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveCustomItemResource, CustomItem>();
+            CreateMap<UpdateCustomItemResource, CustomItem>();
         }
     }
 }

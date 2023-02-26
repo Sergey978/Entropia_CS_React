@@ -11,25 +11,25 @@ namespace Entropia_CS_React.Services
 {
     public class CustomItemService : ICustomItemService
     {
-        private readonly ICustomItemRepo _customItemyRepo;
+        private readonly ICustomItemRepo _customItemRepo;
         private readonly IUnitOfWork _unitOfWork;
 
         public CustomItemService(ICustomItemRepo customItemRepo, IUnitOfWork unitOfWork)
         {
-            this._customItemyRepo = customItemRepo;
+            this._customItemRepo = customItemRepo;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<CustomItem>> ListAsync(int userId)
         {
-            return await _customItemyRepo.ListAsync(userId);
+            return await _customItemRepo.ListAsync(userId);
         }
 
         public async Task<CustomItemResponse> SaveAsync(CustomItem item)
         {
             try
             {
-                await _customItemyRepo.AddAsync(item);
+                await _customItemRepo.AddAsync(item);
                 await _unitOfWork.CompleteAsync();
 
                 return new CustomItemResponse(item);
@@ -48,9 +48,34 @@ namespace Entropia_CS_React.Services
             throw new NotImplementedException();
         }
 
-        public Task<CustomItemResponse> UpdateAsync(int id, CustomItem item)
+        public async Task<CustomItemResponse> UpdateAsync(int id, CustomItem item)
         {
-            throw new NotImplementedException();
+            var existingItem = await _customItemRepo.FindByIdAsync(id);
+
+            if (existingItem == null)
+                return new CustomItemResponse("Item not found.");
+
+            existingItem.Name = item.Name;
+            existingItem.Price = item.Price;
+            existingItem.Selected = item.Selected;
+            existingItem.BeginQuantity = item.BeginQuantity;
+            existingItem.Markup = item.Markup;
+            existingItem.PurchasePrice = item.PurchasePrice;
+            existingItem.Step = item.Step;
+
+            try
+            {
+                await _unitOfWork.CompleteAsync();
+
+                return new CustomItemResponse(existingItem);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CustomItemResponse(
+                    $"An error occurred when updating the category: {ex.Message}"
+                );
+            }
         }
     }
 }

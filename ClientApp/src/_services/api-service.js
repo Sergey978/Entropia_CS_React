@@ -7,7 +7,7 @@ export const apiService = {
   getCustomtItems,
   // getStandartItems,
   // deleteCustomItem,
-  // hideCustomItem,
+  hideCustomItem,
   // hideStandartItem,
   addCustomItem,
   // changeItem,
@@ -36,6 +36,10 @@ async function getCustomtItems() {
 
 async function addCustomItem(params) {
   return fetchWrapper.post(`${baseUrl}/customitem`, params);
+}
+
+async function hideCustomItem(id, params) {
+  return fetchWrapper.put(`${baseUrl}/customitem/${id}`, params);
 }
 
 // async function addCustomItem(params) {
