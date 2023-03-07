@@ -14,7 +14,7 @@ export const Nav = () => {
 
   // only show nav when logged in
   //if (!user) return null;
- 
+
   return (
     <header className="header-global">
       <nav
@@ -82,30 +82,53 @@ export const Nav = () => {
                 </NavLink>
               </li>
 
-              {!user ? "": (
-              <li className="nav-item dropdown">
-                <a href="#" className="nav-link" data-toggle="dropdown">
-                  <span className="nav-link-inner-text">Items</span>
-                  <span className="fas fa-angle-down nav-link-arrow ml-2"></span>
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <NavLink className="dropdown-item" to="/select-items">
-                      Standart
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink className="dropdown-item" to="/custom-items">
-                      Custom
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink className="dropdown-item" to="/graph-page">
-                      Graph
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
+              {!user ? (
+                ""
+              ) : (
+                <li className="nav-item dropdown">
+                  <a href="#" className="nav-link" data-toggle="dropdown">
+                    <span className="nav-link-inner-text">Items</span>
+                    <span className="fas fa-angle-down nav-link-arrow ml-2"></span>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <NavLink className="dropdown-item" to="/select-items">
+                        Standart
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/custom-items">
+                        Custom
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/graph-page">
+                        Graph
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+              )}
+
+              {user && user.role === Role.Admin && (
+                <li className="nav-item dropdown">
+                  <a href="#" className="nav-link" data-toggle="dropdown">
+                    <span className="nav-link-inner-text">Admin</span>
+                    <span className="fas fa-angle-down nav-link-arrow ml-2"></span>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <NavLink className="dropdown-item" to="/admin-standart">
+                        Standart
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/admin/#">
+                        ####
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
               )}
             </ul>
           </div>

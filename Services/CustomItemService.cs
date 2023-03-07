@@ -43,9 +43,27 @@ namespace Entropia_CS_React.Services
             }
         }
 
-        public Task<CustomItemResponse> DeleteAsync(int id)
+        public async Task<CustomItemResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingCustomItem = await _customItemRepo.FindByIdAsync(id);
+
+            if (existingCustomItem == null)
+                return new CustomItemResponse("Item not found.");
+
+            try
+            {
+                _customItemRepo.Remove(existingCustomItem);
+                await _unitOfWork.CompleteAsync();
+
+                return new CustomItemResponse(existingCustomItem);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CustomItemResponse(
+                    $"An error occurred when deleting the item: {ex.Message}"
+                );
+            }
         }
 
         public async Task<CustomItemResponse> UpdateAsync(int id, CustomItem item)

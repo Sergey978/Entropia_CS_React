@@ -10,6 +10,7 @@ import { SelectItemsPage } from "../select-items";
 import { CustomItemsPage } from "../custom-items";
 import { Profile } from "../profile";
 import { Admin } from "../admin";
+import { AdminStandartItemsPage } from "../admin/admin-standart-items";
 import { Account } from "../account";
 import { GraphPage } from "../graph";
 
@@ -32,10 +33,15 @@ function App() {
         <Route exact path="/about" component={About} />
         <Route exact path="/select-items" component={SelectItemsPage} />
         <Route exact path="/custom-items" component={CustomItemsPage} />
-        <Route exact path="/graph-page" component={GraphPage} />  
+        <Route exact path="/graph-page" component={GraphPage} />
         <Route path="/account" component={Account} />
         <PrivateRoute path="/profile" component={Profile} />
         <PrivateRoute path="/admin" roles={[Role.Admin]} component={Admin} />
+        <PrivateRoute
+          path="/admin-standart"
+          roles={[Role.Admin]}
+          component={AdminStandartItemsPage}
+        />
 
         <Redirect from="*" to="/" />
       </Switch>

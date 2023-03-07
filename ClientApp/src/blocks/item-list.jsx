@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 //import { IItem } from '../../services/data-service';
 import "./item-list.css";
 
-const ItemList = ({ data, onDelete, onHide, _deleted }) => (
+const ItemList = ({ data, isSelectable, onDelete, onHide, _deleted }) => (
   <table className="table table-hover shadow-inset rounded">
     <tbody>
       <tr>
@@ -17,30 +17,34 @@ const ItemList = ({ data, onDelete, onHide, _deleted }) => (
 
       {data.map((item) => (
         <tr key={item.id}>
-          <td key={item.id + "_1"} className={!item.selected ? "selected" : ""}>
-            {item.name + "  " + item.selected}
+          <td
+            key={item.id + "_1"}
+            className={isSelectable && !item.selected ? "selected" : ""}
+          >
+            {item.name}
           </td>
           <td key={item.id + "_2"}>{item.price}</td>
           <td key={item.id + "_3"} className="items-button">
-            {onDelete && (
-              <button
-                className="btn btn-sm  btn-outline-danger float-right"
-                disabled={_deleted}
-                onClick={() => {
-                  onDelete(item.itemId);
-                }}
-              >
-                <i className="far fa-lg fa-trash-alt"></i>
-              </button>
-            )}
             <button
-              className="btn btn-sm  btn-outline-secondary float-right"
+              className="btn btn-sm  btn-outline-danger float-right"
+              disabled={_deleted}
               onClick={() => {
-                onHide(item.id, { ...item, selected: !item.selected });
+                onDelete(item.id);
               }}
             >
-              <i className="far fa-lg fa-eye-slash"></i>
+              <i className="far fa-lg fa-trash-alt"></i>
             </button>
+
+            {isSelectable && (
+              <button
+                className="btn btn-sm  btn-outline-secondary float-right"
+                onClick={() => {
+                  onHide(item.id, { ...item, selected: !item.selected });
+                }}
+              >
+                <i className="far fa-lg fa-eye-slash"></i>
+              </button>
+            )}
           </td>
         </tr>
       ))}

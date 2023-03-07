@@ -52,7 +52,7 @@ namespace Entropia_CS_React.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var itemResource = _mapper.Map<CustomItem, CustomItemResource>(result.CustomItem);
+            var itemResource = _mapper.Map<CustomItem, CustomItemResource>(result.Resource);
             return Ok(itemResource);
         }
 
@@ -71,8 +71,29 @@ namespace Entropia_CS_React.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var categoryResource = _mapper.Map<CustomItem, CustomItemResource>(result.CustomItem);
+            var categoryResource = _mapper.Map<CustomItem, CustomItemResource>(result.Resource);
             return Ok(categoryResource);
+        }
+
+        /// <summary>
+        /// Deletes a given custom item according to an identifier.
+        /// </summary>
+        /// <param name="id">Custom Item identifier.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(CustomItemResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _itemService.DeleteAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var customItemResource = _mapper.Map<CustomItem, CustomItemResource>(result.Resource);
+            return Ok(customItemResource);
         }
     }
 }

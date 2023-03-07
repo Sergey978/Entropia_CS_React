@@ -12,9 +12,7 @@ function Register({ history }) {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
 
- 
   function onSubmit(fields) {
-    console.log("submitting...")
     accountService
       .register(fields)
       .then(() => {
@@ -24,7 +22,7 @@ function Register({ history }) {
         );
         history.push("login");
       })
-      .catch((error) => {        
+      .catch((error) => {
         alertService.error(error);
       });
   }
@@ -178,7 +176,10 @@ function Register({ history }) {
                     Already have an account?
                   </span>
                   <span className="font-weight-normal">
-                    <NavLink to="/account/login" className="font-weight-bold text-info">
+                    <NavLink
+                      to="/account/login"
+                      className="font-weight-bold text-info"
+                    >
                       Login here
                     </NavLink>
                   </span>

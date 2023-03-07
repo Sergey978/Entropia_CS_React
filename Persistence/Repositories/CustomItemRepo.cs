@@ -28,9 +28,9 @@ namespace Entropia_CS_React.Persistence.Repositories
             return await _context.CustomItems.FindAsync(id);
         }
 
-        void ICustomItemRepo.Remove(CustomItem item)
+        public void Remove(CustomItem item)
         {
-            throw new NotImplementedException();
+            _context.CustomItems.Remove(item);
         }
 
         public void UpdateAsync(CustomItem item)

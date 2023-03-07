@@ -5,11 +5,13 @@ const baseUrl = `${config.apiUrl}`;
 
 export const apiService = {
   getCustomtItems,
-  // getStandartItems,
-  // deleteCustomItem,
+  getStandartItems,
+  deleteCustomItem,
+  deleteStandartItem,
   hideCustomItem,
   // hideStandartItem,
   addCustomItem,
+  addStandartItem,
   // changeItem,
 };
 
@@ -34,29 +36,29 @@ async function getCustomtItems() {
   return fetchWrapper.get(`${baseUrl}/customitem`);
 }
 
+async function getStandartItems() {
+  return fetchWrapper.get(`${baseUrl}/adminstandartitem`);
+}
+
 async function addCustomItem(params) {
   return fetchWrapper.post(`${baseUrl}/customitem`, params);
+}
+
+async function addStandartItem(params) {
+  return fetchWrapper.post(`${baseUrl}/adminstandartitem`, params);
 }
 
 async function hideCustomItem(id, params) {
   return fetchWrapper.put(`${baseUrl}/customitem/${id}`, params);
 }
 
-// async function addCustomItem(params) {
-//   const res = await fetch(`${this.baseUrl}` + "/customitem", {
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//     },
-//     method: "POST",
-//     //  body: "param1=value1&param2=value2"
-//     body: params,
-//   });
+async function deleteCustomItem(id) {
+  return fetchWrapper.delete(`${baseUrl}/customitem/${id}`);
+}
 
-//   if (!res.ok) {
-//     throw new Error(`Could not fetch ${url}` + `, received ${res.status}`);
-//   }
-//   return await res.json();
-// }
+async function deleteStandartItem(id) {
+  return fetchWrapper.delete(`${baseUrl}/adminstandartitem/${id}`);
+}
 
 // posting form data to api
 async function postForm(apiUrl, data) {

@@ -1,11 +1,11 @@
 import React from "react";
-import { Page, ItemList, AddItemForm } from "../blocks";
-import { apiService } from "../_services";
+import { Page, ItemList, AddItemForm } from "../../blocks";
+import { apiService, alertService } from "../../_services";
 
-export const CustomItemsPage = () => {
+export const AdminStandartItemsPage = () => {
   //for test later change hardcoded
 
-  const [customItems, setCustomItems] = React.useState([]);
+  const [standartItems, setStandatItems] = React.useState([]);
   const [itemsLoading, setItemsLoading] = React.useState(true);
   const [successfullySubmitted, setSuccessfullySubmitted] =
     React.useState(false);
@@ -13,14 +13,14 @@ export const CustomItemsPage = () => {
 
   React.useEffect(() => {
     let cancelled = false;
-    const doGetCustomItems = async () => {
-      const customItems = await apiService.getCustomtItems();
+    const doGetStandartItems = async () => {
+      const standartItems = await apiService.getStandartItems();
       if (!cancelled) {
-        setCustomItems(customItems);
+        setStandatItems(standartItems);
         setItemsLoading(false);
       }
     };
-    doGetCustomItems();
+    doGetStandartItems();
     return () => {
       cancelled = true;
     };
@@ -36,19 +36,14 @@ export const CustomItemsPage = () => {
     if (action === "delete") setSuccessfullyDeleted(false);
   };
 
-  const onDeleteCustomItem = async (id) => {
-    const result = await apiService.deleteCustomItem(id);
+  const onDeleteStandartItem = async (id) => {
+    const result = await apiService.deleteStandartItem(id);
     if (result) {
       setSuccessfullyDeleted(result ? true : false);
     }
   };
 
-  const onHideItem = async (id, item) => {
-    const result = await apiService.hideCustomItem(id, item);
-    if (result) {
-      setItemsLoading(true);
-    }
-  };
+  const onHideItem = async (id, item) => {};
 
   return (
     <Page>
@@ -57,15 +52,15 @@ export const CustomItemsPage = () => {
         <div className="container z-2">
           <div className="row mb-4 justify-content-center">
             <div className="col-12 col-md-8 col-lg-7">
-              <h1 className="display-3 mb-4">Custom Items</h1>
+              <h1 className="display-3 mb-4">Standart Items</h1>
 
               <div className="row justify-content-center">
                 <div className="col-lg-10">
                   <div className="mb-6">
                     <ItemList
-                      data={customItems}
-                      isSelectable={true}
-                      onDelete={onDeleteCustomItem}
+                      data={standartItems}
+                      isSelectable={false}
+                      onDelete={onDeleteStandartItem}
                       _deleted={successfullyDeleted}
                       onHide={onHideItem}
                     />
@@ -119,7 +114,7 @@ export const CustomItemsPage = () => {
                     <AddItemForm
                       _submitResult={submitResult}
                       _submited={successfullySubmitted}
-                      _addFuncion={apiService.addCustomItem}
+                      _addFuncion={apiService.addStandartItem}
                     />
                   </div>
                 </div>

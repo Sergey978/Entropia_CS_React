@@ -6,28 +6,20 @@ using Entropia_CS_React.Domain.Models;
 
 namespace Entropia_CS_React.Domain.Services.Communications.Items
 {
-    public class CustomItemResponse : BaseResponse
+    public class CustomItemResponse : BaseResponse<CustomItem>
     {
-        public CustomItem CustomItem { get; private set; }
-
-        private CustomItemResponse(bool success, string message, CustomItem item)
-            : base(success, message)
-        {
-            CustomItem = item;
-        }
-
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="category">Saved category.</param>
+        /// <param name="category">Saved custom item.</param>
         /// <returns>Response.</returns>
-        public CustomItemResponse(CustomItem item) : this(true, string.Empty, item) { }
+        public CustomItemResponse(CustomItem item) : base(item) { }
 
         /// <summary>
         /// Creates am error response.
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public CustomItemResponse(string message) : this(false, message, null) { }
+        public CustomItemResponse(string message) : base(message) { }
     }
 }
