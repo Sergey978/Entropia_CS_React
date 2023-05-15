@@ -1,0 +1,18 @@
+public async Task<ActionResult> GetProject()
+{
+    var list = await (from x in _dbContext.Project
+                join y in _dbContext.Department
+                on x.Id equals y.Id
+                select new MyClass
+                {
+                    ProjectId = x.Id,
+                    Name = x.Name,
+                    Type = y.Type,
+                    Status = y.Status
+                }).ToListAsync();
+    if (list.count = 0)
+    {
+        return NotFound("NotFound");
+    }
+    return Json(list);
+}

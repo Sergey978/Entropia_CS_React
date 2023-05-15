@@ -1,6 +1,6 @@
 import React from "react";
 import { Page, ItemList, AddItemForm } from "../blocks";
-import { apiService } from "../_services";
+import { apiService, alertService } from "../_services";
 
 export const CustomItemsPage = () => {
   //for test later change hardcoded
@@ -17,6 +17,8 @@ export const CustomItemsPage = () => {
       const customItems = await apiService.getCustomtItems();
       if (!cancelled) {
         setCustomItems(customItems);
+        setSuccessfullySubmitted(false);
+        setSuccessfullyDeleted(false);
         setItemsLoading(false);
       }
     };
@@ -26,25 +28,36 @@ export const CustomItemsPage = () => {
     };
   }, [successfullySubmitted, successfullyDeleted, itemsLoading]);
 
-  // todo send _submitResult function to form
-  const submitResult = (result) => {
-    setSuccessfullySubmitted(result ? true : false);
-  };
-
-  const alertCloseclick = (action) => {
-    if (action === "add") setSuccessfullySubmitted(false);
-    if (action === "delete") setSuccessfullyDeleted(false);
-  };
-
   const onDeleteCustomItem = async (id) => {
-    const result = await apiService.deleteCustomItem(id);
-    if (result) {
-      setSuccessfullyDeleted(result ? true : false);
-    }
+    await apiService
+      .deleteCustomItem(id)
+      .then(() => {
+        setSuccessfullyDeleted(true);
+        alertService.success("Item was removed!");
+      })
+      .catch((error) => {
+        alertService.error(error);
+      });
   };
 
-  const onHideItem = async (id, item) => {
-    const result = await apiService.hideCustomItem(id, item);
+  const onAddCustomItem = async (params) => {
+    apiService
+      .addCustomItem(params)
+      .then(() => {
+        setSuccessfullySubmitted(true);
+        alertService.success("Item was added!");
+      })
+      .catch((error) => {
+        alertService.error(error);
+      });
+  };
+
+  const onHideItem = async (item) => {
+    const result = await apiService.hideCustomItem(item.id, {
+      ...item,
+      selected: !item.selected,
+    });
+
     if (result) {
       setItemsLoading(true);
     }
@@ -64,63 +77,12 @@ export const CustomItemsPage = () => {
                   <div className="mb-6">
                     <ItemList
                       data={customItems}
-                      isSelectable={true}
                       onDelete={onDeleteCustomItem}
                       _deleted={successfullyDeleted}
                       onHide={onHideItem}
                     />
 
-                    {successfullySubmitted && (
-                      <div
-                        className="alert alert-success alert-dismissible shadow-soft fade show"
-                        role="alert"
-                      >
-                        <span className="alert-inner--icon">
-                          <span className="far fa-thumbs-up"></span>
-                        </span>
-                        <span className="alert-inner--text">
-                          <strong>Well done!</strong> Your item was successfully
-                          added.
-                        </span>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          onClick={() => alertCloseclick("add")}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    )}
-
-                    {successfullyDeleted && (
-                      <div
-                        className="alert alert-danger alert-dismissible shadow-soft fade show"
-                        role="alert"
-                      >
-                        <span className="alert-inner--icon">
-                          <span className="far fa-thumbs-up"></span>
-                        </span>
-                        <span className="alert-inner--text">
-                          <strong>Well done!</strong> Your item was successfully
-                          deleted.
-                        </span>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          onClick={() => alertCloseclick("delete")}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    )}
-
-                    <AddItemForm
-                      _submitResult={submitResult}
-                      _submited={successfullySubmitted}
-                      _addFuncion={apiService.addCustomItem}
-                    />
+                    <AddItemForm _addFuncion={onAddCustomItem} />
                   </div>
                 </div>
               </div>

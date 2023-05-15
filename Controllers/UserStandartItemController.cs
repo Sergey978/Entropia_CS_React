@@ -8,6 +8,7 @@ using Entropia_CS_React.Domain.Services;
 using Entropia_CS_React.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Entropia_CS_React.Extensions;
 
 namespace Entropia_CS_React.Controllers
 {
@@ -30,7 +31,7 @@ namespace Entropia_CS_React.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<UserStandartItemResource>> ListAsync()
+        public async Task<IEnumerable<UserStandartItemResource>> List()
         {
             var items = await _userStandartItemService.ListAsync(Account.Id);
             var resources = _mapper.Map<
@@ -38,6 +39,32 @@ namespace Entropia_CS_React.Controllers
                 IEnumerable<UserStandartItemResource>
             >(items);
             return resources;
+        }
+
+        //select/userstandartitem
+        [HttpGet("select")]
+        public async Task<IEnumerable<SelectUserStandartItemResource>> SelectList()
+        {
+            var items = await _userStandartItemService.ListSelectAsync(Account.Id);
+
+            return items;
+        }
+
+        [HttpPost("select")]
+        public async Task<IActionResult> PostAsync(
+            [FromBody] SelectUserStandartItemResource resource
+        )
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var userStandartItem = _mapper.Map<SelectUserStandartItemResource, UserStandartItem>(
+                resource
+            );
+
+            var result = await _userStandartItemService.SaveAsync(userStandartItem, Account.Id);
+
+            return Ok(result);
         }
     }
 }

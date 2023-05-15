@@ -29,8 +29,8 @@ const GraphForm = () => {
   //handle changed selected item
   const selectChange = (event) => {
     const value = event.target.value;
-    const index = graphContext.items.findIndex((object) => {
-      return object.itemId === parseInt(value);
+    const index = graphContext.items.findIndex((obj) => {
+      return obj.id === parseInt(value);
     });
     graphContext.setSelectedItem(graphContext.items[index]);
   };
@@ -61,8 +61,6 @@ const GraphForm = () => {
 
   // submit form
   const onSubmit = (data) => {
-    console.log(state.itemId);
-
     const itemIndex = graphContext.items.findIndex(
       (item) => item.itemId === state.itemId
     );
@@ -93,8 +91,8 @@ const GraphForm = () => {
                               onChange={selectChange}
                             >
                               {graphContext?.items.map((item) => (
-                                <option key={item.itemId} value={item.itemId}>
-                                  {item.itemName}
+                                <option key={item.id} value={item.id}>
+                                  {item.name}
                                 </option>
                               ))}
                             </select>
@@ -112,14 +110,8 @@ const GraphForm = () => {
                             <input
                               className="form-control"
                               id="cost"
-                              type="number"
-                              step="0.01"
-                              {...register("cost", {
-                                required: true,
-                                min: 0.01,
-                              })}
-                              value={state.cost}
-                              onChange={onChange}
+                              value={state.price}
+                              readOnly
                             />
                           </div>
                           <div className="col">

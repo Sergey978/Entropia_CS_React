@@ -1,9 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler, useFormState } from "react-hook-form";
-import { apiService } from "../_services";
 //import { IItem } from '../../services/data-service';
 
-export const AddItemForm = ({ _submitResult, _submited, _addFuncion }) => {
+export const AddItemForm = ({ _addFuncion }) => {
   const {
     register,
     handleSubmit,
@@ -11,18 +10,23 @@ export const AddItemForm = ({ _submitResult, _submited, _addFuncion }) => {
     formState: { errors },
   } = useForm();
 
+  const [isDisabletState, setIsDisabledState] = React.useState(false);
+
   const onSubmit = async (data) => {
-    const result = await _addFuncion({
+    setIsDisabledState(true);
+    setTimeout(() => {
+      setIsDisabledState(false);
+    }, 5000);
+    await _addFuncion({
       Name: data.Name,
       Price: data.price,
     });
-    _submitResult(Boolean(result));
   };
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={_submited}>
+      <fieldset disabled={isDisabletState}>
         <div className="row mb-4   ">
           <div className="col-6">
             {/* register your input into the hook by invoking the "register" function */}

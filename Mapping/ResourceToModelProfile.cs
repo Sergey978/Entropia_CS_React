@@ -15,6 +15,7 @@ namespace Entropia_CS_React.Mapping
             CreateMap<SaveCustomItemResource, CustomItem>();
             CreateMap<SaveStandartItemResource, StandartItem>();
             CreateMap<UpdateCustomItemResource, CustomItem>();
+            CreateMap<SelectUserStandartItemResource, UserStandartItem>();
         }
     }
 }

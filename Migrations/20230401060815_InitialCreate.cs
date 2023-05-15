@@ -108,7 +108,7 @@ namespace SignupVerTutor.Migrations
                     Markup = table.Column<decimal>(type: "TEXT", nullable: false),
                     PurchasePrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     Step = table.Column<int>(type: "INTEGER", nullable: false),
-                    AccountId = table.Column<int>(type: "INTEGER", nullable: true)
+                    AccountId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,7 +118,13 @@ namespace SignupVerTutor.Migrations
                         column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserStandartItems_StandartItems_StandartItemId",
+                        column: x => x.StandartItemId,
+                        principalTable: "StandartItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -135,6 +141,11 @@ namespace SignupVerTutor.Migrations
                 name: "IX_UserStandartItems_AccountId",
                 table: "UserStandartItems",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserStandartItems_StandartItemId",
+                table: "UserStandartItems",
+                column: "StandartItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -146,13 +157,13 @@ namespace SignupVerTutor.Migrations
                 name: "RefreshToken");
 
             migrationBuilder.DropTable(
-                name: "StandartItems");
-
-            migrationBuilder.DropTable(
                 name: "UserStandartItems");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
+
+            migrationBuilder.DropTable(
+                name: "StandartItems");
         }
     }
 }

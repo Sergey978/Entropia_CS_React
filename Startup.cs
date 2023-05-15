@@ -56,6 +56,8 @@ namespace Entropia_CS_React
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICustomItemService, CustomItemService>();
             services.AddScoped<IStandartItemService, StandartItemService>();
+            services.AddScoped<IUserStandartItemService, UserStandartItemService>();
+            services.AddScoped<IUserStandartItemRepository, UserStandartItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

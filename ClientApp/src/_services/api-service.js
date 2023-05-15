@@ -5,32 +5,17 @@ const baseUrl = `${config.apiUrl}`;
 
 export const apiService = {
   getCustomtItems,
+  getUserStandartItems,
+  getSelectUserStandartItems,
   getStandartItems,
   deleteCustomItem,
   deleteStandartItem,
   hideCustomItem,
-  // hideStandartItem,
+  hideUserStandartItem,
   addCustomItem,
   addStandartItem,
   // changeItem,
 };
-
-//  ------------EXAMPLE-------------
-// function login(email, password) {
-//   return fetchWrapper
-//     .post(`${baseUrl}/authenticate`, { email, password })
-//     .then((user) => {
-//       // publish user to subscribers and start timer to refresh token
-//       userSubject.next(user);
-//       startRefreshTokenTimer();
-//       return user;
-//     });
-// }
-
-// -------------- EXAMPLE ---------------
-// function getById(id) {
-//   return fetchWrapper.get(`${baseUrl}/${id}`);
-// }
 
 async function getCustomtItems() {
   return fetchWrapper.get(`${baseUrl}/customitem`);
@@ -40,12 +25,24 @@ async function getStandartItems() {
   return fetchWrapper.get(`${baseUrl}/adminstandartitem`);
 }
 
+async function getSelectUserStandartItems() {
+  return fetchWrapper.get(`${baseUrl}/userstandartitem/select`);
+}
+
+async function getUserStandartItems() {
+  return fetchWrapper.get(`${baseUrl}/userstandartitem`);
+}
+
 async function addCustomItem(params) {
   return fetchWrapper.post(`${baseUrl}/customitem`, params);
 }
 
 async function addStandartItem(params) {
   return fetchWrapper.post(`${baseUrl}/adminstandartitem`, params);
+}
+
+async function hideUserStandartItem(id, params) {
+  return fetchWrapper.post(`${baseUrl}/userstandartitem/select`, params);
 }
 
 async function hideCustomItem(id, params) {

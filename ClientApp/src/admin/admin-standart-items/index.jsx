@@ -17,6 +17,8 @@ export const AdminStandartItemsPage = () => {
       const standartItems = await apiService.getStandartItems();
       if (!cancelled) {
         setStandatItems(standartItems);
+        setSuccessfullySubmitted(false);
+        setSuccessfullyDeleted(false);
         setItemsLoading(false);
       }
     };
@@ -24,26 +26,31 @@ export const AdminStandartItemsPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [successfullySubmitted, successfullyDeleted, itemsLoading]);
+  }, [successfullyDeleted, successfullySubmitted, itemsLoading]);
 
-  // todo send _submitResult function to form
-  const submitResult = (result) => {
-    setSuccessfullySubmitted(result ? true : false);
-  };
-
-  const alertCloseclick = (action) => {
-    if (action === "add") setSuccessfullySubmitted(false);
-    if (action === "delete") setSuccessfullyDeleted(false);
+  const onAddstandartItem = async (params) => {
+    apiService
+      .addStandartItem(params)
+      .then(() => {
+        setSuccessfullySubmitted(true);
+        alertService.success("Item was added!");
+      })
+      .catch((error) => {
+        alertService.error(error);
+      });
   };
 
   const onDeleteStandartItem = async (id) => {
-    const result = await apiService.deleteStandartItem(id);
-    if (result) {
-      setSuccessfullyDeleted(result ? true : false);
-    }
+    apiService
+      .deleteStandartItem(id)
+      .then(() => {
+        setSuccessfullyDeleted(true);
+        alertService.success("Item was removed!");
+      })
+      .catch((error) => {
+        alertService.error(error);
+      });
   };
-
-  const onHideItem = async (id, item) => {};
 
   return (
     <Page>
@@ -61,61 +68,9 @@ export const AdminStandartItemsPage = () => {
                       data={standartItems}
                       isSelectable={false}
                       onDelete={onDeleteStandartItem}
-                      _deleted={successfullyDeleted}
-                      onHide={onHideItem}
                     />
 
-                    {successfullySubmitted && (
-                      <div
-                        className="alert alert-success alert-dismissible shadow-soft fade show"
-                        role="alert"
-                      >
-                        <span className="alert-inner--icon">
-                          <span className="far fa-thumbs-up"></span>
-                        </span>
-                        <span className="alert-inner--text">
-                          <strong>Well done!</strong> Your item was successfully
-                          added.
-                        </span>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          onClick={() => alertCloseclick("add")}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    )}
-
-                    {successfullyDeleted && (
-                      <div
-                        className="alert alert-danger alert-dismissible shadow-soft fade show"
-                        role="alert"
-                      >
-                        <span className="alert-inner--icon">
-                          <span className="far fa-thumbs-up"></span>
-                        </span>
-                        <span className="alert-inner--text">
-                          <strong>Well done!</strong> Your item was successfully
-                          deleted.
-                        </span>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          onClick={() => alertCloseclick("delete")}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    )}
-
-                    <AddItemForm
-                      _submitResult={submitResult}
-                      _submited={successfullySubmitted}
-                      _addFuncion={apiService.addStandartItem}
-                    />
+                    <AddItemForm _addFuncion={onAddstandartItem} />
                   </div>
                 </div>
               </div>

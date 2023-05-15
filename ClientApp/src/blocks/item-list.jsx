@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 //import { IItem } from '../../services/data-service';
 import "./item-list.css";
 
-const ItemList = ({ data, isSelectable, onDelete, onHide, _deleted }) => (
+const ItemList = ({ data, onDelete, onHide, _deleted }) => (
   <table className="table table-hover shadow-inset rounded">
     <tbody>
       <tr>
@@ -16,30 +16,32 @@ const ItemList = ({ data, isSelectable, onDelete, onHide, _deleted }) => (
       </tr>
 
       {data.map((item) => (
-        <tr key={item.id}>
+        <tr key={item.name}>
           <td
-            key={item.id + "_1"}
-            className={isSelectable && !item.selected ? "selected" : ""}
+            key={item.name + "_1"}
+            className={onHide && !item.selected ? "selected" : ""}
           >
             {item.name}
           </td>
-          <td key={item.id + "_2"}>{item.price}</td>
-          <td key={item.id + "_3"} className="items-button">
-            <button
-              className="btn btn-sm  btn-outline-danger float-right"
-              disabled={_deleted}
-              onClick={() => {
-                onDelete(item.id);
-              }}
-            >
-              <i className="far fa-lg fa-trash-alt"></i>
-            </button>
+          <td key={item.name + "_2"}>{item.price}</td>
+          <td key={item.name + "_3"} className="items-button">
+            {onDelete && (
+              <button
+                className="btn btn-sm  btn-outline-danger float-right"
+                disabled={_deleted}
+                onClick={() => {
+                  onDelete(item.id);
+                }}
+              >
+                <i className="far fa-lg fa-trash-alt"></i>
+              </button>
+            )}
 
-            {isSelectable && (
+            {onHide && (
               <button
                 className="btn btn-sm  btn-outline-secondary float-right"
                 onClick={() => {
-                  onHide(item.id, { ...item, selected: !item.selected });
+                  onHide(item);
                 }}
               >
                 <i className="far fa-lg fa-eye-slash"></i>

@@ -1,0 +1,1 @@
+SELECT * FROM StandartItems left JOIN (SELECT * from UserStandartItems WHERE UserStandartItems.AccountId == 2) as usi on StandartItems.Id == usi.StandartItemId 

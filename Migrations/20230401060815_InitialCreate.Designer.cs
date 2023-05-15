@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SignupVerTutor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230211083220_InitialCreate")]
+    [Migration("20230401060815_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,7 +122,7 @@ namespace SignupVerTutor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int>("AccountId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BeginQuantity")
@@ -146,6 +146,8 @@ namespace SignupVerTutor.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("StandartItemId");
 
                     b.ToTable("UserStandartItems");
                 });
@@ -210,7 +212,17 @@ namespace SignupVerTutor.Migrations
                 {
                     b.HasOne("Entropia_CS_React.Domain.Models.Account", null)
                         .WithMany("StandartItems")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entropia_CS_React.Domain.Models.StandartItem", "StandartItem")
+                        .WithMany()
+                        .HasForeignKey("StandartItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StandartItem");
                 });
 
             modelBuilder.Entity("Entropia_CS_React.Domain.Models.Account", b =>

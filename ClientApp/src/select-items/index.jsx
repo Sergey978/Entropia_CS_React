@@ -1,22 +1,20 @@
 import React from "react";
 import { Page } from "../blocks/page";
-import {DataService} from "../_services";
+import { apiService, alertService } from "../_services";
 import { ItemList } from "../blocks/item-list";
 
 export const SelectItemsPage = () => {
   //for test later change hardcoded
-  const userId = 4;
 
-  const { getUserStandartItems, hideStandartItem } = DataService.getInstance();
   const [standartItems, setStandartItems] = React.useState([]);
   const [itemsLoading, setItemsLoading] = React.useState(true);
 
   React.useEffect(() => {
     let cancelled = false;
     const doGetStandartItems = async () => {
-      const customItems = await getUserStandartItems(userId);
+      const userStandartItems = await apiService.getSelectUserStandartItems();
       if (!cancelled) {
-        setStandartItems(customItems);
+        setStandartItems(userStandartItems);
         setItemsLoading(false);
       }
     };
@@ -24,10 +22,13 @@ export const SelectItemsPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [userId, itemsLoading]);
+  }, [itemsLoading]);
 
-  const onHideItem = async (id) => {
-    const result = await hideStandartItem(userId, id);
+  const onHideItem = async (item) => {
+    const result = await apiService.hideUserStandartItem(item.id, {
+      ...item,
+      selected: !item.selected,
+    });
     if (result) {
       setItemsLoading(true);
     }
@@ -57,4 +58,3 @@ export const SelectItemsPage = () => {
     </Page>
   );
 };
-
