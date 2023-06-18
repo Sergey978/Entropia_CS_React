@@ -13,6 +13,7 @@ namespace Entropia_CS_React.Domain.Repositories
         Task<IEnumerable<SelectUserStandartItemResource>> ListSelectAsync(int userId);
         Task AddAsync(UserStandartItem item);
         Task<UserStandartItem> FindByIdAsync(int id);
+        Task<UserStandartItem> FindByItemIdandUserIdAsync(int itemId, int userId);
         void Update(UserStandartItem item);
         void Remove(UserStandartItem item);
     }

@@ -63,7 +63,6 @@ namespace Entropia_CS_React.Services
                 || !BC.Verify(model.Password, account.PasswordHash)
             )
                 throw new AppException("Email or password is incorrect");
-            //TODO solve throw exception, send message to client
 
             // authentication successful so generate jwt and refresh tokens
             var jwtToken = generateJwtToken(account);

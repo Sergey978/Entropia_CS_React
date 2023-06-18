@@ -13,7 +13,7 @@ const GraphDataProvider = ({ children }) => {
     markup: 0, //PED
     beginQuantity: 0,
     quantity: 0,
-    stepQuantity: 0,
+    step: 0,
     selected: false,
   });
   const [table, setTable] = React.useState([]);
@@ -31,7 +31,6 @@ const GraphDataProvider = ({ children }) => {
         setItems(items);
         setSelectedItem(items[0]);
         setUserItemsLoading(false);
-        console.log("context_update");
       }
     };
     doGetItems();
@@ -47,12 +46,12 @@ const GraphDataProvider = ({ children }) => {
     if (
       selectedItem.beginQuantity !== 0 &&
       selectedItem.quantity !== 0 &&
-      selectedItem.stepQuantity !== 0
+      selectedItem.step !== 0
     ) {
       for (
         let i = selectedItem.beginQuantity;
         i <= selectedItem.quantity;
-        i += selectedItem.stepQuantity
+        i += selectedItem.step
       ) {
         let sellingPrice = Math.round(
           i * selectedItem.cost + selectedItem.markup

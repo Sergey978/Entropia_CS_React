@@ -2,11 +2,13 @@ import React, { ChangeEvent } from "react";
 import { useForm, useFormState, SubmitHandler } from "react-hook-form";
 import { DataContext } from "../context";
 import { GraphFormLoading } from "./graph-form-loading";
+import { apiService, alertService } from "../_services";
 
 const GraphForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -14,7 +16,7 @@ const GraphForm = () => {
 
   //state for selectecting item
 
-  const [state, setState] = React.useState({
+  const [valueState, setValueState] = React.useState({
     itemId: 0,
     itemName: "",
     cost: 0, // price for one item PED
@@ -22,7 +24,7 @@ const GraphForm = () => {
     markup: 0, //PED
     beginQuantity: 0,
     quantity: 0,
-    stepQuantity: 0,
+    step: 0,
     selected: true,
   });
 
@@ -32,12 +34,20 @@ const GraphForm = () => {
     const index = graphContext.items.findIndex((obj) => {
       return obj.id === parseInt(value);
     });
+
+    setValue("cost", graphContext.items[index].cost);
+    setValue("purchasePrice", graphContext.items[index].purchasePrice);
+    setValue("beginQuantity", graphContext.items[index].beginQuantity);
+    setValue("quantity", graphContext.items[index].quantity);
+    setValue("step", graphContext.items[index].step);
+    setValue("markup", graphContext.items[index].markup);
+
     graphContext.setSelectedItem(graphContext.items[index]);
   };
 
   React.useEffect(() => {
     if (graphContext.selectedItem) {
-      setState(graphContext.selectedItem);
+      setValueState(graphContext.selectedItem);
     }
   }, [graphContext.selectedItem]);
 
@@ -47,13 +57,13 @@ const GraphForm = () => {
     let convertedValue = Number(value);
 
     if (convertedValue) {
-      setState({
-        ...state,
+      setValueState({
+        ...valueState,
         [evt.currentTarget.id]: convertedValue,
       });
     } else {
-      setState({
-        ...state,
+      setValueState({
+        ...valueState,
         [evt.currentTarget.id]: value,
       });
     }
@@ -62,11 +72,14 @@ const GraphForm = () => {
   // submit form
   const onSubmit = (data) => {
     const itemIndex = graphContext.items.findIndex(
-      (item) => item.itemId === state.itemId
+      (item) => item.id === valueState.id
     );
-    graphContext.items[itemIndex] = state;
-    graphContext.setItems(graphContext.items);
-    graphContext.setSelectedItem(state);
+
+    graphContext.items[itemIndex] = valueState;
+    // graphContext.setItems(graphContext.items);
+    graphContext.setSelectedItem(valueState);
+    console.log("sendForm", valueState);
+    apiService.modifyUserItems(valueState.id, valueState);
   };
 
   /* <-- Section -->   */
@@ -90,11 +103,14 @@ const GraphForm = () => {
                               className="custom-select"
                               onChange={selectChange}
                             >
-                              {graphContext?.items.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                  {item.name}
-                                </option>
-                              ))}
+                              {graphContext?.items.map(
+                                (item) =>
+                                  item.selected && (
+                                    <option key={item.id} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  )
+                              )}
                             </select>
                           </div>
                         </div>
@@ -110,7 +126,7 @@ const GraphForm = () => {
                             <input
                               className="form-control"
                               id="cost"
-                              value={state.price}
+                              value={valueState.cost}
                               readOnly
                             />
                           </div>
@@ -132,7 +148,7 @@ const GraphForm = () => {
                                 required: true,
                                 min: 10.0,
                               })}
-                              value={state.purchasePrice}
+                              value={valueState.purchasePrice}
                               onChange={onChange}
                             />
                           </div>
@@ -166,7 +182,7 @@ const GraphForm = () => {
                                 min: 1,
                               })}
                               onChange={onChange}
-                              value={state.beginQuantity}
+                              value={valueState.beginQuantity}
                             />
                           </div>
 
@@ -186,7 +202,7 @@ const GraphForm = () => {
                               {...register("quantity", {
                                 validate: {
                                   required: (value) => {
-                                    if (value <= state.beginQuantity)
+                                    if (value <= valueState.beginQuantity)
                                       return "Should be more than Begin Quantity";
                                     return true;
                                   },
@@ -196,30 +212,29 @@ const GraphForm = () => {
                                 valueAsNumber: true,
                               })}
                               onChange={onChange}
-                              value={state.quantity}
+                              value={valueState.quantity}
                             />
                           </div>
 
                           <div className="col">
                             <label
                               className={
-                                errors.stepQuantity &&
-                                "text-danger font-weight-bold"
+                                errors.step && "text-danger font-weight-bold"
                               }
                             >
                               Step
                             </label>
                             <input
                               className="form-control"
-                              id="stepQuantity"
+                              id="step"
                               type="number"
-                              {...register("stepQuantity", {
+                              {...register("step", {
                                 required: true,
                                 min: 1,
                                 valueAsNumber: true,
                               })}
                               onChange={onChange}
-                              value={state.stepQuantity}
+                              value={valueState.step}
                             />
                           </div>
                         </div>
@@ -243,7 +258,7 @@ const GraphForm = () => {
                                 valueAsNumber: true,
                               })}
                               onChange={onChange}
-                              value={state.markup}
+                              value={valueState.markup}
                             />
                           </div>
 

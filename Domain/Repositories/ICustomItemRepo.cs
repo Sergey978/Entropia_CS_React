@@ -12,6 +12,7 @@ namespace Entropia_CS_React.Domain.Repositories
         Task<IEnumerable<CustomItem>> ListAsync(int userId);
         Task AddAsync(CustomItem item);
         Task<CustomItem> FindByIdAsync(int id);
+        Task<CustomItem> FindByIdandUserIdAsync(int itemId, int userId);
 
         void UpdateAsync(CustomItem item);
 

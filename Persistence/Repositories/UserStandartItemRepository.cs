@@ -72,5 +72,12 @@ namespace Entropia_CS_React.Persistence.Repositories
                 )
                 .ToListAsync();
         }
+
+        public async Task<UserStandartItem> FindByItemIdandUserIdAsync(int itemId, int userId)
+        {
+            return await _context.UserStandartItems
+                .Where(i => i.Id == itemId && i.AccountId == userId)
+                .FirstOrDefaultAsync<UserStandartItem>();
+        }
     }
 }

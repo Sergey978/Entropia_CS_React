@@ -28,6 +28,13 @@ namespace Entropia_CS_React.Persistence.Repositories
             return await _context.CustomItems.FindAsync(id);
         }
 
+        public async Task<CustomItem> FindByIdandUserIdAsync(int itemId, int userId)
+        {
+            return await _context.CustomItems
+                .Where(i => i.Id == itemId && i.AccountId == userId)
+                .FirstOrDefaultAsync<CustomItem>();
+        }
+
         public void Remove(CustomItem item)
         {
             _context.CustomItems.Remove(item);

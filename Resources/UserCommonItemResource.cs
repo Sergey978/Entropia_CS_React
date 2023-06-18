@@ -5,16 +5,14 @@ using System.Threading.Tasks;
 
 namespace Entropia_CS_React.Resources
 {
-    public class CustomItemResource
+    public class UserCommonItemResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Cost { get; set; }
-        public bool Selected { get; set; }
         public int BeginQuantity { get; set; }
-        public int Quantity { get; set; }
         public decimal Markup { get; set; }
         public decimal PurchasePrice { get; set; }
+        public int Quantity { get; set; }
         public int Step { get; set; }
     }
 }

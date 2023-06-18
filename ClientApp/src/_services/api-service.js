@@ -14,6 +14,7 @@ export const apiService = {
   hideUserStandartItem,
   addCustomItem,
   addStandartItem,
+  modifyUserItems,
   // changeItem,
 };
 
@@ -55,6 +56,10 @@ async function deleteCustomItem(id) {
 
 async function deleteStandartItem(id) {
   return fetchWrapper.delete(`${baseUrl}/adminstandartitem/${id}`);
+}
+
+async function modifyUserItems(id, params) {
+  return fetchWrapper.put(`${baseUrl}/UserCommonItem/${id}`, params);
 }
 
 // posting form data to api

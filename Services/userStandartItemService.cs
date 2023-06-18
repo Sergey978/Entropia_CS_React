@@ -14,7 +14,7 @@ namespace Entropia_CS_React.Services
     public class UserStandartItemService : IUserStandartItemService
     {
         private readonly IUserStandartItemRepository _userStandartItemRepository;
-        private readonly IStandartItemRepo _standartItemRepo;
+
         private readonly IUnitOfWork _unitOfWork;
 
         public UserStandartItemService(
@@ -111,7 +111,7 @@ namespace Entropia_CS_React.Services
             return await _userStandartItemRepository.ListSelectAsync(userId);
         }
 
-        Task<UserStandartItem> IUserStandartItemService.UpdateAsync(int id, UserStandartItem item)
+        public Task<UserStandartItem> UpdateAsync(int id, UserStandartItem item)
         {
             throw new NotImplementedException();
         }

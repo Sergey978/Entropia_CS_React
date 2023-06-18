@@ -12,6 +12,7 @@ namespace Entropia_CS_React.Domain.Models
         public StandartItem StandartItem { get; set; }
         public bool Selected { get; set; }
         public int BeginQuantity { get; set; }
+        public int Quantity { get; set; }
         public decimal Markup { get; set; }
         public decimal PurchasePrice { get; set; }
         public int Step { get; set; }
