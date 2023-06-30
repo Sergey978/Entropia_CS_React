@@ -8,7 +8,7 @@ const GraphDataProvider = ({ children }) => {
   const [selectedItem, setSelectedItem] = React.useState({
     itemId: 0,
     itemName: "",
-    cost: 0, // price for one item PED
+    price: 0, // price for one item PED
     purchasePrice: 0, // price in %
     markup: 0, //PED
     beginQuantity: 0,
@@ -54,13 +54,13 @@ const GraphDataProvider = ({ children }) => {
         i += selectedItem.step
       ) {
         let sellingPrice = Math.round(
-          i * selectedItem.cost + selectedItem.markup
+          i * selectedItem.price + selectedItem.markup
         );
-        let markup = sellingPrice - selectedItem.cost * i;
+        let markup = sellingPrice - selectedItem.price * i;
         let tax = 0.5 + (markup * 99.5) / (1990 + markup);
         let profit =
           sellingPrice -
-          (selectedItem.cost * selectedItem.purchasePrice * i) / 100 -
+          (selectedItem.price * selectedItem.purchasePrice * i) / 100 -
           tax;
 
         tableRows.push({
@@ -68,7 +68,7 @@ const GraphDataProvider = ({ children }) => {
           Price: sellingPrice,
           Profit: profit,
           Tax: tax,
-          Markup: (sellingPrice / (i * selectedItem.cost)) * 100,
+          Markup: (sellingPrice / (i * selectedItem.price)) * 100,
           IsSelected: false,
         });
       }

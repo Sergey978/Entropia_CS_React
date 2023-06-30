@@ -27,7 +27,7 @@ namespace Entropia_CS_React.Persistence.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sqlite database
-            options.UseSqlite(Configuration.GetConnectionString("SignupVerTutorDatabase"));
+            options.UseSqlServer(Configuration.GetConnectionString("SignupVerTutorDatabase"));
         }
     }
 }

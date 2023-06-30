@@ -15,7 +15,8 @@ namespace Entropia_CS_React.Domain.Services
 
         Task<SelectUserStandartItemResponse> SaveAsync(UserStandartItem item, int accountId);
 
-        Task<UserStandartItem> UpdateAsync(int id, UserStandartItem item);
+        Task<SelectUserStandartItemResponse> ToggleHide(UserStandartItem item, int accountId);
+        Task<SelectUserStandartItemResponse> UpdateAsync(UserStandartItem item, int id);
 
         Task<UserStandartItem> DeleteAsync(int id);
     }

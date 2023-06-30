@@ -36,7 +36,10 @@ namespace Entropia_CS_React.Services
             int accountId
         )
         {
-            var existingItem = await _userStandartItemRepository.FindByIdAsync(item.Id);
+            var existingItem = await _userStandartItemRepository.FindByItemIdandUserIdAsync(
+                item.Id,
+                accountId
+            );
 
             if (existingItem != null)
             //if item exist update it
@@ -70,10 +73,10 @@ namespace Entropia_CS_React.Services
                     Id = 0,
                     StandartItemId = item.StandartItemId,
                     Selected = true,
-                    BeginQuantity = 0,
-                    Markup = 0,
-                    PurchasePrice = 0,
-                    Step = 0,
+                    BeginQuantity = 100,
+                    Markup = 1,
+                    PurchasePrice = 103,
+                    Step = 1,
                     AccountId = accountId
                 };
                 try
@@ -94,8 +97,8 @@ namespace Entropia_CS_React.Services
         }
 
         public async Task<SelectUserStandartItemResponse> UpdateAsync(
-            int id,
-            SelectUserStandartItemResource item
+            UserStandartItem item,
+            int userId
         )
         {
             throw new NotImplementedException();
@@ -111,9 +114,40 @@ namespace Entropia_CS_React.Services
             return await _userStandartItemRepository.ListSelectAsync(userId);
         }
 
-        public Task<UserStandartItem> UpdateAsync(int id, UserStandartItem item)
+        public async Task<SelectUserStandartItemResponse> ToggleHide(
+            UserStandartItem item,
+            int accountId
+        )
         {
-            throw new NotImplementedException();
+            var existingItem = await _userStandartItemRepository.FindByItemIdandUserIdAsync(
+                item.StandartItemId,
+                accountId
+            );
+
+            if (existingItem != null)
+            //if item exist update it
+            {
+                existingItem.Selected = item.Selected;
+
+                try
+                {
+                    await _unitOfWork.CompleteAsync();
+                    return new SelectUserStandartItemResponse(existingItem);
+                }
+                catch (Exception ex)
+                {
+                    // Do some logging stuff
+                    return new SelectUserStandartItemResponse(
+                        $"An error occurred when saving the item: {ex.Message}"
+                    );
+                }
+            }
+            else
+            {
+                return new SelectUserStandartItemResponse(
+                    $"An error occurred when saving the item: Item not found"
+                );
+            }
         }
     }
 }

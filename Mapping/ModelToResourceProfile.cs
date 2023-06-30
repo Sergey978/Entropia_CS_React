@@ -12,12 +12,12 @@ namespace Entropia_CS_React.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<CustomItem, CustomItemResource>()
-                .ForMember("Cost", opt => opt.MapFrom(c => c.Price));
+            CreateMap<CustomItem, CustomItemResource>();
+
             CreateMap<StandartItem, StandartItemResource>();
             CreateMap<UserStandartItem, UserStandartItemResource>()
                 .ForMember("Name", opt => opt.MapFrom(c => c.StandartItem.Name))
-                .ForMember("Cost", opt => opt.MapFrom(c => c.StandartItem.Price));
+                .ForMember("Price", opt => opt.MapFrom(c => c.StandartItem.Price));
             CreateMap<UserStandartItem, SelectUserStandartItemResource>();
         }
     }

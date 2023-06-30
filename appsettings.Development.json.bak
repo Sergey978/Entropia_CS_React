@@ -1,0 +1,23 @@
+{
+  "ConnectionStrings": {
+    "SignupVerTutorDatabase": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Entropia;Integrated Security=True;User Instance=False;"
+  },
+
+  "AppSettings": {
+    "Secret": "supersecret_string!!!",
+    "RefreshTokenTTL": 2,
+    "EmailFrom": "marty.bergnaum@ethereal.email",
+    "SmtpHost": "smtp.ethereal.email",
+    "SmtpPort": 587,
+    "SmtpUser": "marty.bergnaum@ethereal.email",
+    "SmtpPass": "GRfyzz8hfVRyTgVZqU"
+  },
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}

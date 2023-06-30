@@ -32,6 +32,16 @@ namespace Entropia_CS_React.Persistence.Repositories
             return await _context.UserStandartItems.FindAsync(id);
         }
 
+        public async Task<UserStandartItem> FindByStandartItemIdAndUserIdAsync(
+            int standartItemId,
+            int userId
+        )
+        {
+            return await _context.UserStandartItems
+                .Where(usi => usi.StandartItemId == standartItemId && usi.AccountId == userId)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<UserStandartItem> FindByStandartItemIdAsync(int standartItemId)
         {
             return await _context.UserStandartItems
@@ -76,7 +86,7 @@ namespace Entropia_CS_React.Persistence.Repositories
         public async Task<UserStandartItem> FindByItemIdandUserIdAsync(int itemId, int userId)
         {
             return await _context.UserStandartItems
-                .Where(i => i.Id == itemId && i.AccountId == userId)
+                .Where(i => i.StandartItemId == itemId && i.AccountId == userId)
                 .FirstOrDefaultAsync<UserStandartItem>();
         }
     }

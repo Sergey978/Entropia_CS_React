@@ -9,7 +9,7 @@ namespace Entropia_CS_React.Resources
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Cost { get; set; }
+        public decimal Price { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal Markup { get; set; }
         public int BeginQuantity { get; set; }

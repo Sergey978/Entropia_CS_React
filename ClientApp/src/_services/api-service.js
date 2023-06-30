@@ -11,7 +11,7 @@ export const apiService = {
   deleteCustomItem,
   deleteStandartItem,
   hideCustomItem,
-  hideUserStandartItem,
+  hideUserStandartItem: toggleHideUserStandartItem,
   addCustomItem,
   addStandartItem,
   modifyUserItems,
@@ -42,8 +42,11 @@ async function addStandartItem(params) {
   return fetchWrapper.post(`${baseUrl}/adminstandartitem`, params);
 }
 
-async function hideUserStandartItem(id, params) {
-  return fetchWrapper.post(`${baseUrl}/userstandartitem/select`, params);
+async function toggleHideUserStandartItem(id, params) {
+  return fetchWrapper.put(
+    `${baseUrl}/userstandartitem/togglehide/${id}`,
+    params
+  );
 }
 
 async function hideCustomItem(id, params) {

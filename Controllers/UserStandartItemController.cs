@@ -50,15 +50,35 @@ namespace Entropia_CS_React.Controllers
             return items;
         }
 
-        [HttpPost("select")]
-        public async Task<IActionResult> PostAsync(
-            [FromBody] SelectUserStandartItemResource resource
+        [HttpPut("togglehide/{id}")]
+        public async Task<IActionResult> ToggleHideAsync(
+            int id,
+            [FromBody] ToggleHideStandartItemResource resource
         )
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var userStandartItem = _mapper.Map<SelectUserStandartItemResource, UserStandartItem>(
+            var userStandartItem = _mapper.Map<ToggleHideStandartItemResource, UserStandartItem>(
+                resource
+            );
+
+            var result = await _userStandartItemService.ToggleHide(userStandartItem, Account.Id);
+
+            return Ok(result);
+        }
+
+        // TODO doesn't work properly remove later
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(
+            int id,
+            [FromBody] ToggleHideStandartItemResource resource
+        )
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var userStandartItem = _mapper.Map<ToggleHideStandartItemResource, UserStandartItem>(
                 resource
             );
 

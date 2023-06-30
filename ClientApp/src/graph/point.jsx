@@ -28,15 +28,15 @@ export const Point = ({ tableRow, chartParams }) => {
       data-toggle="tooltip"
       data-placement="top"
       title={
-        "Sell " +
+        "Quantity  " +
+        tableRow.Quantity +
+        "\n " +
+        "Selling Price  " +
         tableRow.Price +
-        "; " +
+        "\n " +
         "Markup " +
         tableRow.Markup.toFixed(2) +
-        "; " +
-        "Quantity " +
-        tableRow.Quantity +
-        "; " +
+        "\n " +
         "Profit " +
         tableRow.Profit.toFixed(2)
       }

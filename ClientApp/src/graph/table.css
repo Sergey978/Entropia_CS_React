@@ -1,27 +1,38 @@
-
 .table-container {
-    height:500px; /* высота нашего блока */
-    
-    background: #fff; /* цвет фона, белый */
-    border: 1px solid #C1C1C1; /* размер и цвет границы блока */
-    overflow-x: auto; /* прокрутка по горизонтали */
-    overflow-y: scroll; /* прокрутка по вертикали */
+    height: 650px;
+    /* высота нашего блока */
+
+    background: #fff;
+    /* цвет фона, белый */
+    border: 1px solid #C1C1C1;
+    /* размер и цвет границы блока */
+    overflow-x: auto;
+    /* прокрутка по горизонтали */
+    overflow-y: scroll;
+    /* прокрутка по вертикали */
 }
 
 
 .my-custom-scrollbar {
     position: relative;
-    height: 600px;
+    height: 650px;
     overflow: auto;
-    }
-    .table-wrapper-scroll-y {
-    display: block;
-    }
+}
 
-    thead tr:nth-child(1) th{
-        border-top: none;
-        background: lightgray;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+thead tr:nth-child(1) th {
+    border-top: none;
+    background: lightgray;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.display-5 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.3;
+}

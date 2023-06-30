@@ -19,7 +19,7 @@ const GraphForm = () => {
   const [valueState, setValueState] = React.useState({
     itemId: 0,
     itemName: "",
-    cost: 0, // price for one item PED
+    price: 0, // price for one item PED
     purchasePrice: 0, // price in %
     markup: 0, //PED
     beginQuantity: 0,
@@ -35,7 +35,7 @@ const GraphForm = () => {
       return obj.id === parseInt(value);
     });
 
-    setValue("cost", graphContext.items[index].cost);
+    setValue("price", graphContext.items[index].cost);
     setValue("purchasePrice", graphContext.items[index].purchasePrice);
     setValue("beginQuantity", graphContext.items[index].beginQuantity);
     setValue("quantity", graphContext.items[index].quantity);
@@ -78,7 +78,6 @@ const GraphForm = () => {
     graphContext.items[itemIndex] = valueState;
     // graphContext.setItems(graphContext.items);
     graphContext.setSelectedItem(valueState);
-    console.log("sendForm", valueState);
     apiService.modifyUserItems(valueState.id, valueState);
   };
 
@@ -88,9 +87,9 @@ const GraphForm = () => {
   } else
     return (
       <section className="section pt-0">
-        <div className="container">
-          <div className="row">
-            <div className="col">
+        <div className="container-md">
+          <div className="row justify-content-center">
+            <div className="col-10">
               <div className="card bg-primary shadow-soft border-light p-4">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
@@ -125,8 +124,8 @@ const GraphForm = () => {
                             </label>
                             <input
                               className="form-control"
-                              id="cost"
-                              value={valueState.cost}
+                              id="price"
+                              value={valueState.price}
                               readOnly
                             />
                           </div>
@@ -202,8 +201,13 @@ const GraphForm = () => {
                               {...register("quantity", {
                                 validate: {
                                   required: (value) => {
-                                    if (value <= valueState.beginQuantity)
-                                      return "Should be more than Begin Quantity";
+                                    if (
+                                      value <= valueState.beginQuantity ||
+                                      (value - valueState.beginQuantity) /
+                                        valueState.step >
+                                        500
+                                    )
+                                      return "Should be more than Begin Quantity and less than 500 point";
                                     return true;
                                   },
                                 },
@@ -214,6 +218,9 @@ const GraphForm = () => {
                               onChange={onChange}
                               value={valueState.quantity}
                             />
+                            <span className="text-danger">
+                              {errors.quantity?.message}
+                            </span>
                           </div>
 
                           <div className="col">

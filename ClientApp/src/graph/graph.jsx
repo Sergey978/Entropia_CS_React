@@ -25,30 +25,6 @@ export const Graph = () => {
   const graphContext = React.useContext(DataContext);
   const [chartState, setChartState] = useState(chartParams);
   const zoomRef = useRef(null);
-  // console.log("maxpoint", maxPoint);
-
-  // useEffect(() => {
-  //     //console.log(maxPoint)
-  //     if (maxPoint.x !== 0 && maxPoint.y !== 0) {
-
-  //         setChartState((chartState) => ({
-  //             ...chartState,
-  //             kx: (chartState.lx - 100 - chartState.oxn) / (maxPoint.x - 100),
-  //             ky: (chartState.oyn + chartState.ly) / maxPoint.y
-
-  //         }));
-
-  //         console.log("chartState", chartState)
-
-  //     }
-  //     //     setChartState((chartState) => ({
-  //     //         ...chartState,
-  //     //         kx: (chartState.lx - 100 - chartState.oxn) /(maxPoint.x - 100),
-  //     //         ky: (chartState.oyn + chartState.ly) / maxPoint.y
-
-  //     //     }));
-
-  // }, [maxPoint]);
 
   useEffect(() => {
     const scroll = (e) => {
@@ -117,7 +93,7 @@ export const Graph = () => {
       x = 100 + chartState.oxn + (selectedPoint.Markup - 100) * chartState.kx;
       y = chartState.oyn + chartState.ly - selectedPoint.Profit * chartState.ky;
 
-      // if point in the visible are of chart
+      // if point in the visible area of chart
 
       if (x <= chartState.oxn + chartState.lx && y >= 0) {
         const centerX = zoomRef.current?.offsetWidth;
