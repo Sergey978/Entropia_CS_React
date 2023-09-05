@@ -7,7 +7,7 @@ const GraphDataProvider = ({ children }) => {
   const [items, setItems] = React.useState([]);
   const [selectedItem, setSelectedItem] = React.useState({
     itemId: 0,
-    itemName: "",
+    itemName: "Item wasn't selected",
     price: 0, // price for one item PED
     purchasePrice: 0, // price in %
     markup: 0, //PED
@@ -29,7 +29,9 @@ const GraphDataProvider = ({ children }) => {
           ...(await apiService.getCustomtItems()),
         ];
         setItems(items);
-        setSelectedItem(items[0]);
+        if (items.length != 0) {
+          setSelectedItem(items[0]);
+        }
         setUserItemsLoading(false);
       }
     };
@@ -44,6 +46,7 @@ const GraphDataProvider = ({ children }) => {
     const tableRows = [];
 
     if (
+      items.length != 0 &&
       selectedItem.beginQuantity !== 0 &&
       selectedItem.quantity !== 0 &&
       selectedItem.step !== 0

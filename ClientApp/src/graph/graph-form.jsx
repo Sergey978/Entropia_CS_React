@@ -31,6 +31,7 @@ const GraphForm = () => {
   //handle changed selected item
   const selectChange = (event) => {
     const value = event.target.value;
+    graphContext.setScrollTo("");
     const index = graphContext.items.findIndex((obj) => {
       return obj.id === parseInt(value);
     });
@@ -55,6 +56,7 @@ const GraphForm = () => {
   const onChange = (evt) => {
     const value = evt.currentTarget.value;
     let convertedValue = Number(value);
+    graphContext.setScrollTo("");
 
     if (convertedValue) {
       setValueState({

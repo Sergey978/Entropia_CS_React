@@ -74,6 +74,7 @@ namespace Entropia_CS_React.Services
                     StandartItemId = item.StandartItemId,
                     Selected = true,
                     BeginQuantity = 100,
+                    Quantity = 500,
                     Markup = 1,
                     PurchasePrice = 103,
                     Step = 1,
@@ -143,10 +144,9 @@ namespace Entropia_CS_React.Services
                 }
             }
             else
+            //create userstandartitem
             {
-                return new SelectUserStandartItemResponse(
-                    $"An error occurred when saving the item: Item not found"
-                );
+                return await SaveAsync(item, accountId);
             }
         }
     }

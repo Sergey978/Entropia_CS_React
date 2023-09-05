@@ -25,7 +25,7 @@ function Login({ history, location }) {
         const { from } = location.state || { from: { pathname: "/" } };
         history.push(from);
       })
-      .catch((error) => {       
+      .catch((error) => {
         alertService.error(error);
       });
   }
@@ -119,12 +119,12 @@ function Login({ history, location }) {
                         </label>
                       </div>
                       <div>
-                        <a
-                          href="#"
+                        <NavLink
+                          to="/account/forgot-password"
                           className="small text-right font-weight-bold text-info"
                         >
                           Lost password?
-                        </a>
+                        </NavLink>
                       </div>
                     </div>
                   </div>

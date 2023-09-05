@@ -17,7 +17,8 @@ namespace Entropia_CS_React.Mapping
             CreateMap<StandartItem, StandartItemResource>();
             CreateMap<UserStandartItem, UserStandartItemResource>()
                 .ForMember("Name", opt => opt.MapFrom(c => c.StandartItem.Name))
-                .ForMember("Price", opt => opt.MapFrom(c => c.StandartItem.Price));
+                .ForMember("Price", opt => opt.MapFrom(c => c.StandartItem.Price))
+                .ForMember("Id", opt => opt.MapFrom(c => c.StandartItem.Id));
             CreateMap<UserStandartItem, SelectUserStandartItemResource>();
         }
     }

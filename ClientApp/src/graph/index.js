@@ -1,3 +1,1 @@
-export {GraphPage} from "./graph-page";
-//export {GraphFormLoading} from "./graph-form-loading";
-//export {GraphForm} from "./graph-form";
+export { GraphPage } from "./graph-page";

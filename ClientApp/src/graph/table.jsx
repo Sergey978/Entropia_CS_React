@@ -17,6 +17,7 @@ export const TableComponent = () => {
 
   //scroll to selected row
   useEffect(() => {
+    //todo bug somtimes quantity still not defined
     if (graphContext?.scrollTo === "table") {
       const selectedRowindex = graphContext?.table.find(
         (o) => o.IsSelected === true

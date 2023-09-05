@@ -1,15 +1,15 @@
 {
    "ConnectionStrings": {
-    "SignupVerTutorDatabase": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Entropia;Integrated Security=True;User Instance=False;"
+    "SignupVerTutorDatabase": "workstation id=Entropia.mssql.somee.com;packet size=4096;user id=Sergey978_SQLLogin_1;pwd=ajhgehqi2d;data source=Entropia.mssql.somee.com;persist security info=False;initial catalog=Entropia"
   },
   "AppSettings": {
-    "Secret": "322223",
+    "Secret": "322223jjn9348h9uh43hriuhc934h98h487g7itctdi7yv8p9uho8yv7icti",
     "RefreshTokenTTL": 2,
-    "EmailFrom": "marty.bergnaum@ethereal.email",
-    "SmtpHost": "smtp.ethereal.email",
+    "EmailFrom": "entropia.somee.com@gmail.com",
+    "SmtpHost": "smtp.gmail.com",
     "SmtpPort": 587,
-    "SmtpUser": "marty.bergnaum@ethereal.email",
-    "SmtpPass": "GRfyzz8hfVRyTgVZqU"
+    "SmtpUser": "entropia.somee.com@gmail.com",
+    "SmtpPass": "cdjffnzvftrekpcj"
   },
 
   "Logging": {

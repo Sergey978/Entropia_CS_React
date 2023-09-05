@@ -11,7 +11,7 @@ export const apiService = {
   deleteCustomItem,
   deleteStandartItem,
   hideCustomItem,
-  hideUserStandartItem: toggleHideUserStandartItem,
+  toggleHideUserStandartItem,
   addCustomItem,
   addStandartItem,
   modifyUserItems,

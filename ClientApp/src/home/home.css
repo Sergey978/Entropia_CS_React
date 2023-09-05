@@ -1,0 +1,62 @@
+    .carousel-caption {
+
+        position: absolute;
+        right: 15%;
+        top: 80px;
+        left: 15%;
+        z-index: 10;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: #ECF0F3;
+        text-align: center;
+    }
+
+    .carousel-caption .h1 {
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 4.5em;
+        font-weight: bold;
+        color: #111111;
+        text-shadow:
+            -0 -1px 1px #F7E8E8,
+            0 -1px 1px #F7E8E8,
+            -0 1px 1px #F7E8E8,
+            0 1px 1px #F7E8E8,
+            -1px -0 1px #F7E8E8,
+            1px -0 1px #F7E8E8,
+            -1px 0 1px #F7E8E8,
+            1px 0 1px #F7E8E8,
+            -1px -1px 1px #F7E8E8,
+            1px -1px 1px #F7E8E8,
+            -1px 1px 1px #F7E8E8,
+            1px 1px 1px #F7E8E8,
+            -1px -1px 1px #F7E8E8,
+            1px -1px 1px #F7E8E8,
+            -1px 1px 1px #F7E8E8,
+            1px 1px 1px #F7E8E8;
+    }
+
+    .carousel-caption p {
+        font-family: "Nunito Sans",
+            sans-serif;
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #111111;
+        text-shadow:
+            -0 -1px 1px #F7E8E8,
+            0 -1px 1px #F7E8E8,
+            -0 1px 1px #F7E8E8,
+            0 1px 1px #F7E8E8,
+            -1px -0 1px #F7E8E8,
+            1px -0 1px #F7E8E8,
+            -1px 0 1px #F7E8E8,
+            1px 0 1px #F7E8E8,
+            -1px -1px 1px #F7E8E8,
+            1px -1px 1px #F7E8E8,
+            -1px 1px 1px #F7E8E8,
+            1px 1px 1px #F7E8E8,
+            -1px -1px 1px #F7E8E8,
+            1px -1px 1px #F7E8E8,
+            -1px 1px 1px #F7E8E8,
+            1px 1px 1px #F7E8E8;
+
+    }

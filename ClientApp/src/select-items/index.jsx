@@ -25,10 +25,13 @@ export const SelectItemsPage = () => {
   }, [itemsLoading]);
 
   const onHideItem = async (item) => {
-    const result = await apiService.hideUserStandartItem(item.id, {
-      ...item,
-      selected: !item.selected,
-    });
+    const result = await apiService.toggleHideUserStandartItem(
+      item.standartItemId,
+      {
+        ...item,
+        selected: !item.selected,
+      }
+    );
     if (result) {
       setItemsLoading(true);
     }

@@ -29,12 +29,12 @@ export const Nav = () => {
           >
             <img
               className="navbar-brand-dark"
-              src="./assets/img/brand/dark.svg"
+              src="./assets/img/brand/light.svg"
               alt="Logo light"
             />
             <img
               className="navbar-brand-light"
-              src="./assets/img/brand/dark.svg"
+              src="./assets/img/brand/dark2.svg"
               alt="Logo dark"
             />
           </a>

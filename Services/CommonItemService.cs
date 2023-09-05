@@ -31,7 +31,16 @@ namespace Entropia_CS_React.Services
             int accountId
         )
         {
-            UserCommonItemResource returnedCommonItemResource;
+            UserCommonItemResource _returnedCommonItemResource = new UserCommonItemResource
+            {
+                Id = 0,
+                Name = "",
+                BeginQuantity = 1,
+                Markup = 1,
+                PurchasePrice = 101,
+                Quantity = 500,
+                Step = 1
+            };
             // find by userId and itemId custom item
             var existingCustomItem = await _customItemRepo.FindByIdandUserIdAsync(
                 item.Id,
@@ -51,6 +60,14 @@ namespace Entropia_CS_React.Services
                 existingCustomItem.Markup = item.Markup;
                 existingCustomItem.PurchasePrice = item.PurchasePrice;
                 existingCustomItem.Step = item.Step;
+                // make returned resource
+                _returnedCommonItemResource.Id = existingCustomItem.Id;
+                _returnedCommonItemResource.Name = existingCustomItem.Name;
+                _returnedCommonItemResource.BeginQuantity = existingCustomItem.BeginQuantity;
+                _returnedCommonItemResource.Markup = existingCustomItem.Markup;
+                _returnedCommonItemResource.PurchasePrice = existingCustomItem.PurchasePrice;
+                _returnedCommonItemResource.Quantity = existingCustomItem.Quantity;
+                _returnedCommonItemResource.Step = existingCustomItem.Step;
             }
             else if (existingUserStandartItem != null)
             {
@@ -59,39 +76,20 @@ namespace Entropia_CS_React.Services
                 existingUserStandartItem.Markup = item.Markup;
                 existingUserStandartItem.PurchasePrice = item.PurchasePrice;
                 existingUserStandartItem.Step = item.Step;
+                // make returned resource
+                _returnedCommonItemResource.Id = existingUserStandartItem.Id;
+                _returnedCommonItemResource.BeginQuantity = existingUserStandartItem.BeginQuantity;
+                _returnedCommonItemResource.Markup = existingUserStandartItem.Markup;
+                _returnedCommonItemResource.PurchasePrice = existingUserStandartItem.PurchasePrice;
+                _returnedCommonItemResource.Quantity = existingUserStandartItem.Quantity;
+                _returnedCommonItemResource.Step = existingUserStandartItem.Step;
             }
 
             try
             {
                 await _unitOfWork.CompleteAsync();
-                // make returned resource
 
-                if (existingCustomItem != null)
-                {
-                    returnedCommonItemResource = new UserCommonItemResource
-                    {
-                        Id = existingCustomItem.Id,
-                        Name = existingCustomItem.Name,
-                        BeginQuantity = existingCustomItem.BeginQuantity,
-                        Markup = existingCustomItem.Markup,
-                        PurchasePrice = existingCustomItem.PurchasePrice,
-                        Quantity = existingCustomItem.Quantity,
-                        Step = existingCustomItem.Step
-                    };
-                }
-                else
-                {
-                    returnedCommonItemResource = new UserCommonItemResource
-                    {
-                        Id = existingUserStandartItem.Id,
-                        BeginQuantity = existingUserStandartItem.BeginQuantity,
-                        Markup = existingUserStandartItem.Markup,
-                        PurchasePrice = existingUserStandartItem.PurchasePrice,
-                        Quantity = existingUserStandartItem.Quantity,
-                        Step = existingUserStandartItem.Step
-                    };
-                }
-                return new UserCommonItemModifyResponse(returnedCommonItemResource);
+                return new UserCommonItemModifyResponse(_returnedCommonItemResource);
             }
             catch (Exception ex)
             {
