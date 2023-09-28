@@ -50,7 +50,7 @@ export const AddItemForm = ({ _addFuncion }) => {
             />
             {/* errors will return when field validation fails  */}
             {(errors.price && <span className="text-danger">Required</span>) ||
-              (!errors.price && <label className="form-label">Price</label>)}
+              (!errors.price && <label className="form-label">Value</label>)}
           </div>
           <div className="col-3 justify-content-end">
             <button className="btn btn-primary text-secondary" type="submit">

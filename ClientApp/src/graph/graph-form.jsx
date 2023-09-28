@@ -122,7 +122,7 @@ const GraphForm = () => {
                                 errors.cost && "text-danger font-weight-bold"
                               }
                             >
-                              Item cost
+                              Value
                             </label>
                             <input
                               className="form-control"

@@ -10,7 +10,7 @@ const ItemList = ({ data, onDelete, onHide, _deleted }) => (
           Name
         </th>
         <th className="border-0" scope="col">
-          Cost
+          Value
         </th>
         <th className="border-0" scope="col"></th>
       </tr>

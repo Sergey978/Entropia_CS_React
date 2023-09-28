@@ -46,9 +46,14 @@ function Update({ history }) {
         <div className="form-group">
           <label>Email</label>
           <input
+            id="email"
             name="email"
             type="text"
             className={"form-control" + (errors.email ? " is-invalid" : "")}
+            {...register("email", {
+              pattern:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
           />
         </div>
         <h3 className="pt-3">Change Password</h3>
@@ -57,21 +62,32 @@ function Update({ history }) {
           <div className="form-group col">
             <label>Password</label>
             <input
+              id="password"
               name="password"
               type="password"
               className={
                 "form-control" + (errors.password ? " is-invalid" : "")
               }
+              {...register("password", {})}
             />
           </div>
           <div className="form-group col">
             <label>Confirm Password</label>
             <input
+              id="confirmPassword"
               name="confirmPassword"
               type="password"
               className={
                 "form-control" + (errors.confirmPassword ? " is-invalid" : "")
               }
+              {...register("confirmPassword", {
+                validate: {
+                  matchesPreviousPassword: (value) => {
+                    const { password } = getValues();
+                    return password === value || "Passwords should match!";
+                  },
+                },
+              })}
             />
           </div>
         </div>
@@ -79,22 +95,12 @@ function Update({ history }) {
           <button type="submit" className="btn btn-primary mr-2">
             Update
           </button>
-          <button
-            type="button"
-            onClick={() => onDelete()}
-            className="btn btn-danger"
-            style={{ width: "75px" }}
-            disabled={isDeleting}
-          >
-            {isDeleting ? (
-              <span className="spinner-border spinner-border-sm"></span>
-            ) : (
-              <span>Delete</span>
-            )}
+
+          <button className="btn btn-danger" style={{ width: "75px" }}>
+            <Link to=".">
+              <span>Cancel</span>
+            </Link>
           </button>
-          <Link to="." className="btn btn-link">
-            Cancel
-          </Link>
         </div>
       </form>
     </div>
